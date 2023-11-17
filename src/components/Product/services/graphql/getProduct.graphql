@@ -1,0 +1,27 @@
+query getProduct($input: ReadProductInputDto!) {
+  getProduct(input: $input) {
+    product {
+      _id
+      name
+      description
+      price
+      countInStock
+      image {
+        url
+        _id
+      }
+      manufacturer
+      modelNumber
+      dimensions
+      weight
+      connectivity
+      powerSource
+      compatibility
+      warranty
+      totalLike
+      totalComment
+      type
+      totalSold
+    }
+  }
+}

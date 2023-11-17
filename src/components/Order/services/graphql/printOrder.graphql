@@ -1,0 +1,5 @@
+mutation printOrder($input: ConfirmOrderInput!) {
+  printOrder(input: $input) {
+    pdfPath
+  }
+}
