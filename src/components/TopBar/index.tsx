@@ -13,20 +13,20 @@ const TopBar = ({ showNav, setShowNav }: any) => {
 
   return (
     <div
-      className={`fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${
+      className={`fixed z-40 shadow-md w-full bg-white h-16 flex justify-between items-center transition-all duration-[400ms] ${
         showNav ? 'pl-56' : ''
       }`}
     >
       <div className="pl-4 md:pl-16">
-        <FaBars className="text-black h-8 w-8  cursor-pointer" onClick={() => setShowNav(!showNav)} />
+        <FaBars className="text-blue-500 h-6 w-6  cursor-pointer" onClick={() => setShowNav(!showNav)} />
       </div>
       <div className="flex items-center pr-4 md:pr-16 ">
         <Popover className="relative flex ">
-          <Link href={'/messager'} className="mr-5 md:mr-8 ">
+          <Link href={'/messager'} className="mr-5 md:mr-8  text-blue-500">
             <BiMessageDetail size={30} />
           </Link>
           <Popover.Button className="outline-none mr-5 md:mr-8 cursor-pointer text-gray-700">
-            <BsBell className="h-6 w-6" />
+            <BsBell className="h-6 w-6 text-blue-500 " />
           </Popover.Button>
           <Transition
             as={Fragment}
@@ -93,12 +93,15 @@ const TopBar = ({ showNav, setShowNav }: any) => {
               <Menu.Button className="inline-flex w-full justify-center items-center">
                 <picture>
                   <img
-                    src="/images/admin.jpg"
+                    src="/images/admin.webp"
                     className="rounded-full h-8 md:mr-4 border-2 border-white shadow-sm"
                     alt="profile picture"
                   />
                 </picture>
-                <span className="hidden md:block font-medium text-gray-700">{user.fullName || user.userName}</span>
+                <div className="flex flex-col">
+                  <span className="hidden md:block font-bold">{user.fullName || user.userName}</span>
+                  <span className="text-gray-600 text-sm">Quản trị viên</span>
+                </div>
                 <FaChevronDown className="ml-2 h-4 w-4 text-gray-700" />
               </Menu.Button>
             </div>

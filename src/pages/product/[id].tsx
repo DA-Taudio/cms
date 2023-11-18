@@ -303,7 +303,7 @@ const DetailProduct = ({ data }: any) => {
                                 src={
                                   item.user?.avatarId
                                     ? `http://127.0.0.1:7007/${item.user?.avatarId?.url}`
-                                    : '/images/admin.jpg'
+                                    : '/images/admin.webp'
                                 }
                                 alt="Ảnh người dùng"
                                 width={500}

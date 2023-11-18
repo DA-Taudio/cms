@@ -9,7 +9,7 @@ const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, r
   const router = useRouter();
 
   return (
-    <div ref={ref} className="fixed w-56 h-full bg-black shadow-sm">
+    <div ref={ref} className="fixed w-56 z-50 h-full bg-[#001529] shadow-sm">
       <div className="flex justify-center mt-6 mb-14">
         <picture>
           <img className="w-32 h-auto" src="/images/logo2.png" alt="company logo" />
@@ -20,9 +20,7 @@ const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, r
         <Link href="/">
           <div
             className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
-              router.pathname == '/'
-                ? 'bg-orange-100 text-orange-500'
-                : 'text-white hover:bg-orange-100 hover:text-orange-500'
+              router.pathname == '/' ? 'bg-white text-blue-700' : 'text-white hover:bg-white hover:text-blue-700'
             }`}
           >
             <div className="mr-2">
@@ -36,9 +34,7 @@ const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, r
         <Link href="/product">
           <div
             className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
-              router.pathname == '/product'
-                ? 'bg-orange-100 text-orange-500'
-                : 'text-white hover:bg-orange-100 hover:text-orange-500'
+              router.pathname == '/product' ? 'bg-white text-blue-700' : 'text-white hover:bg-white hover:text-blue-700'
             }`}
           >
             <div className="mr-2">
@@ -53,8 +49,8 @@ const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, r
           <div
             className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
               router.pathname == '/product/type'
-                ? 'bg-orange-100 text-orange-500'
-                : 'text-white hover:bg-orange-100 hover:text-orange-500'
+                ? 'bg-white text-blue-700'
+                : 'text-white hover:bg-white hover:text-blue-700'
             }`}
           >
             <div className="mr-2">
@@ -68,9 +64,7 @@ const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, r
         <Link href="/user">
           <div
             className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
-              router.pathname == '/user'
-                ? 'bg-orange-100 text-orange-500'
-                : 'text-white hover:bg-orange-100 hover:text-orange-500'
+              router.pathname == '/user' ? 'bg-white text-blue-700' : 'text-white hover:bg-white hover:text-blue-700'
             }`}
           >
             <div className="mr-2">
@@ -84,9 +78,7 @@ const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, r
         <Link href="/order">
           <div
             className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
-              router.pathname == '/order'
-                ? 'bg-orange-100 text-orange-500'
-                : 'text-white hover:bg-orange-100 hover:text-orange-500'
+              router.pathname == '/order' ? 'bg-white text-blue-700' : 'text-white hover:bg-white hover:text-blue-700'
             }`}
           >
             <div className="mr-2">
@@ -101,8 +93,8 @@ const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, r
           <div
             className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
               router.pathname == '/messager'
-                ? 'bg-orange-100 text-orange-500'
-                : 'text-white hover:bg-orange-100 hover:text-orange-500'
+                ? 'bg-white text-blue-700'
+                : 'text-white hover:bg-white hover:text-blue-700'
             }`}
           >
             <div className="mr-2">

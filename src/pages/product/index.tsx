@@ -7,7 +7,7 @@ const ProductPage = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="m-10 text-amber-600 font-bold">
+      <div className="mt-10 mb-5 text-black font-bold">
         <h1>DANH SÁCH SẢN PHẨM</h1>
       </div>
       {user ? <Product /> : <></>}

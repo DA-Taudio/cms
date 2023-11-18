@@ -25,9 +25,14 @@ const AuthModal = () => {
   };
 
   return (
-    <div className="absolute w-full flex align-middle bg-black bg-opacity-80 z-50 top-0  left-0 right-0 bottom-0">
+    <div
+      className="absolute w-full flex align-middle bg-black bg-opacity-80 z-50 top-0  left-0 right-0 bottom-0"
+      style={{
+        backgroundImage: '/images/logo2.png'
+      }}
+    >
       {' '}
-      <div className="bg-white w-5/12  m-auto p-28 pt-14 flex flex-col">
+      <div className="bg-white w-[500px] rounded-md  m-auto p-12 pt-14 flex flex-col">
         {/* <div>
           <button
             className="text-2xl mb-14 float-right "
@@ -39,32 +44,37 @@ const AuthModal = () => {
             <FaTimes />
           </button>
         </div> */}
-        <h1 className="text-2xl">Đăng Nhập Là Quản Trị Viên </h1>{' '}
+        <h1 className="text-2xl text-blue-600">Quản Trị Viên </h1>{' '}
         <form onSubmit={handleSubmit}>
           {' '}
-          <div className="form-group mt-20 flex justify-between">
-            <label className="p-2 text-lg">Tài Khoản:</label>
+          <div className="form-group mt-10 flex flex-col justify-between">
+            <label className="p-2 pl-0 text-lg">Tài Khoản</label>
             <input
               type="text"
-              className="rounded-md w-9/12 p-2 border border-black form-control"
+              className="rounded-md w-full p-2 border border-black form-control"
               value={userName}
               onChange={handleUserNameChange}
               required
-              placeholder="Nhập tài khoản của bạn..."
+              placeholder="Nhập tài khoản"
             />{' '}
           </div>{' '}
-          <div className="form-group mt-5 flex justify-between">
-            <label className="p-2 text-lg">Mật Khẩu:</label>{' '}
+          <div className="form-group mt-5 flex flex-col justify-between">
+            <label className="p-2 pl-0 text-lg">Mật Khẩu</label>{' '}
             <input
               type="password"
-              className="rounded-md w-9/12 border border-black p-2 form-control"
+              className="rounded-md w-full border border-black p-2 form-control"
               value={password}
               onChange={handlePasswordChange}
               required
-              placeholder="Nhập mật khẩu của bạn..."
+              placeholder="Nhập mật khẩu"
             />{' '}
           </div>{' '}
-          <button className="w-full mt-20  mb-0  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+          <button
+            className="  w-full mt-20  mb-0   text-white font-bold py-3 px-4 border  rounded-md"
+            style={{
+              background: 'linear-gradient(298deg,#00daff,#802bc3 38%,#ff0097 62%,#f6a01a)'
+            }}
+          >
             {isLoading ? 'Đang Đăng nhập...' : 'Đăng Nhập'}
           </button>{' '}
         </form>{' '}

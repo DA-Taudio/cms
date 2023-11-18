@@ -71,7 +71,7 @@ const ConversationBox = ({ props }: any) => {
     e.preventDefault();
     const payload = {
       to: props._id,
-      from: { _id: user?._id, avatarId: { url: '/images/account/admin.jpg' }, fullName: 'Admin' },
+      from: { _id: user?._id, avatarId: { url: '/images/account/admin.webp' }, fullName: 'Admin' },
       message: message
     };
     socket && socket.emit('sendMessage', payload);

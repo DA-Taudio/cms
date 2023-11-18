@@ -20,13 +20,14 @@ const customStyles = {
   },
   headRow: {
     style: {
-      backgroundColor: 'black',
-      color: 'white'
+      backgroundColor: '#E2E8F0',
+      color: '#777E90',
+      fontWeight: 'bold'
     }
   },
   headCells: {
     style: {
-      fontSize: '18px'
+      fontSize: '16px'
     }
   }
 };
@@ -44,7 +45,7 @@ const Product = () => {
   const [id, setId] = useState<any>();
   const router = useRouter();
   const columns = [
-    { name: 'ID', selector: (row: any) => row._id },
+    // { name: 'Id', selector: (row: any) => row._id },
     {
       name: 'Hình ảnh',
       cell: (row: any) => (
@@ -128,10 +129,19 @@ const Product = () => {
   return (
     <div>
       <div className="flex justify-between mb-10">
-        <input className="py-4 px-4 w-2/4 outline-none" type="text" placeholder="Tìm kiếm..." onChange={handleFilter} />
+        <input
+          className="pl-5 w-2/4 rounded-md outline-none border border-gray-500"
+          type="text"
+          placeholder="Tìm kiếm..."
+          onChange={handleFilter}
+        />
         <Link
           href="/product/add"
-          className=" flex px-4 py-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
+          className=" flex px-2 py-3   text-[#FF0097] font-bold rounded"
+          style={{
+            background:
+              'linear-gradient(238.04deg, rgba(0, 218, 255, 0.2) -32.33%, rgba(128, 43, 195, 0.2) 28.78%, rgba(255, 0, 151, 0.2) 67.37%, rgba(246, 160, 26, 0.2) 128.48%)'
+          }}
         >
           <RiAddLine className="mr-2 m-auto" />
           <span>Thêm sản phẩm</span>

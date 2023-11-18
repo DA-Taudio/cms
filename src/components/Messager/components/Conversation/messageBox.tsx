@@ -13,7 +13,7 @@ const MessageBox = ({ props }: any) => {
   }
   const imageUrl =
     senderId?.fullName === 'Admin'
-      ? '/images/admin.jpg'
+      ? '/images/admin.webp'
       : process.env.NEXT_PUBLIC_MEDIA_ENDPOINT + senderId?.avatarId?.url;
   const container = clsx('flex gap-3 mb-5', isOwn && 'justify-end');
   const avatar = clsx(isOwn && 'order-2');
@@ -23,7 +23,9 @@ const MessageBox = ({ props }: any) => {
     <div className={container}>
       <div className={avatar}>
         <Avatar
-          props={{ image: `${senderId ? (senderId.avatarId ? imageUrl : '/images/admin.jpg') : '/images/admin.jpg'}` }}
+          props={{
+            image: `${senderId ? (senderId.avatarId ? imageUrl : '/images/admin.webp') : '/images/admin.webp'}`
+          }}
         />
       </div>
       <div className={body}>
