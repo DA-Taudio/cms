@@ -3,7 +3,9 @@ query getListProduct($input: GetListProductInput!) {
     products {
       _id
       name
-
+      price
+      countInStock
+      totalSold
       image {
         url
       }

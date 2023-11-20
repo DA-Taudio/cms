@@ -51,6 +51,19 @@ export type AdminPayload = {
   userName?: Maybe<Scalars['String']>;
 };
 
+export type ApplyVouchersInput = {
+  couponCode: Array<Scalars['String']>;
+  items?: InputMaybe<Array<OrderItem>>;
+};
+
+export type ApplyVouchersResponse = {
+  __typename?: 'ApplyVouchersResponse';
+  discountAmount: Scalars['Float'];
+  info: Array<InfoApply>;
+  items: Array<OrderItemType>;
+  totalPayment: Scalars['Float'];
+};
+
 export type BooleanPayload = {
   __typename?: 'BooleanPayload';
   success?: Maybe<Scalars['Boolean']>;
@@ -152,7 +165,7 @@ export type CreateConversationType = {
 
 export type CreatePaymentInputDto = {
   code: Scalars['String'];
-  couponCode?: InputMaybe<Scalars['String']>;
+  couponCode?: InputMaybe<Array<Scalars['String']>>;
   description?: InputMaybe<Scalars['String']>;
   items: Array<OrderItem>;
   paymentMethod: PaymentMethod;
@@ -184,6 +197,28 @@ export type CreateProductInputDto = {
   weight?: InputMaybe<Scalars['String']>;
 };
 
+export type CreateSliderInput = {
+  mediaId?: InputMaybe<Scalars['String']>;
+  position?: InputMaybe<Scalars['Float']>;
+  redirectUrl?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<SliderType>;
+};
+
+export type CreateVoucherInput = {
+  code: Scalars['String'];
+  endTime: Scalars['String'];
+  maxDiscount: Scalars['Float'];
+  maxUserUse: Scalars['Float'];
+  percent: Scalars['Float'];
+  productIds: Array<Scalars['String']>;
+  quantity: Scalars['Float'];
+  startTime: Scalars['String'];
+};
+
+export type DeleteSliderInput = {
+  sliderId?: InputMaybe<Scalars['String']>;
+};
+
 export type DeleteTypeInput = {
   typeId: Scalars['String'];
 };
@@ -196,6 +231,14 @@ export type FilterProductInput = {
   price_gte?: InputMaybe<Scalars['Float']>;
   price_lte?: InputMaybe<Scalars['Float']>;
   type_eq?: InputMaybe<Scalars['String']>;
+};
+
+export type FilterSliderInput = {
+  type_eq?: InputMaybe<SliderType>;
+};
+
+export type FilterVoucherInput = {
+  status_eq?: InputMaybe<VoucherStatus>;
 };
 
 export enum Gender {
@@ -230,6 +273,17 @@ export type GetListTypeResponse = {
 export type GetProductResponse = {
   __typename?: 'GetProductResponse';
   product?: Maybe<ProductPayload>;
+};
+
+export type GetSliderInput = {
+  sliderId?: InputMaybe<Scalars['String']>;
+};
+
+export type InfoApply = {
+  __typename?: 'InfoApply';
+  code?: Maybe<Scalars['String']>;
+  reducedAmount?: Maybe<Scalars['Float']>;
+  voucherId?: Maybe<Scalars['String']>;
 };
 
 export type IsFavoriteProductInput = {
@@ -278,9 +332,34 @@ export type ListOrderResponse = {
   orders?: Maybe<Array<OrderDto>>;
 };
 
+export type ListSliderInput = {
+  filter?: InputMaybe<FilterSliderInput>;
+  pagination: PaginationBaseInput;
+};
+
+export type ListSliderResponse = {
+  __typename?: 'ListSliderResponse';
+  pagination?: Maybe<PaginationResponse>;
+  sliders?: Maybe<Array<SliderResponse>>;
+  totalItem?: Maybe<Scalars['Float']>;
+};
+
 export type ListUserResponse = {
   __typename?: 'ListUserResponse';
   user: Array<UserDtoType>;
+};
+
+export type ListVoucherInput = {
+  filter?: InputMaybe<FilterVoucherInput>;
+  pagination: PaginationBaseInput;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type ListVoucherResponse = {
+  __typename?: 'ListVoucherResponse';
+  pagination?: Maybe<PaginationResponse>;
+  totalItem?: Maybe<Scalars['Float']>;
+  vouchers?: Maybe<Array<VoucherResponse>>;
 };
 
 export type LockOrUnLockUserInput = {
@@ -342,6 +421,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addToCart: BooleanPayload;
   adminLogin: AdminLoginResponse;
+  applyVouchers: ApplyVouchersResponse;
   changePassword: ChangePasswordResponse;
   changePasswordWhenLogin: ChangePassWhenLoginType;
   clearCart: BooleanPayload;
@@ -353,9 +433,13 @@ export type Mutation = {
   createConversation: CreateConversationType;
   createPayment: CreatePaymentResponse;
   createProduct: BooleanPayload;
+  createSlider: SliderResponse;
   createType: BooleanPayload;
+  createVoucher: VoucherResponse;
   deleteProduct: BooleanPayload;
+  deleteSlider: BooleanPayload;
   deleteType: BooleanPayload;
+  deleteVoucher: BooleanPayload;
   favoriteProduct: BooleanPayload;
   inValidOtp: ConfirmOtpResponse;
   lockOrUnLockUser: BooleanPayload;
@@ -369,6 +453,8 @@ export type Mutation = {
   updateAvatarUser: BooleanPayload;
   updateProduct: BooleanPayload;
   updateProfile: UpdateProfileResponse;
+  updateSlider: BooleanPayload;
+  updateVoucher: BooleanPayload;
   verifyEmail: BooleanPayload;
   verifyPhone: VerifyPhoneResponse;
 };
@@ -381,6 +467,11 @@ export type MutationAddToCartArgs = {
 
 export type MutationAdminLoginArgs = {
   input: AdminInputDto;
+};
+
+
+export type MutationApplyVouchersArgs = {
+  input: ApplyVouchersInput;
 };
 
 
@@ -434,8 +525,18 @@ export type MutationCreateProductArgs = {
 };
 
 
+export type MutationCreateSliderArgs = {
+  input: CreateSliderInput;
+};
+
+
 export type MutationCreateTypeArgs = {
   input: ProductTypeInput;
+};
+
+
+export type MutationCreateVoucherArgs = {
+  input: CreateVoucherInput;
 };
 
 
@@ -444,8 +545,18 @@ export type MutationDeleteProductArgs = {
 };
 
 
+export type MutationDeleteSliderArgs = {
+  input: DeleteSliderInput;
+};
+
+
 export type MutationDeleteTypeArgs = {
   input: DeleteTypeInput;
+};
+
+
+export type MutationDeleteVoucherArgs = {
+  input: ReadVoucherInput;
 };
 
 
@@ -514,6 +625,16 @@ export type MutationUpdateProfileArgs = {
 };
 
 
+export type MutationUpdateSliderArgs = {
+  input: UpdateSliderInput;
+};
+
+
+export type MutationUpdateVoucherArgs = {
+  input: UpdateVoucherInput;
+};
+
+
 export type MutationVerifyEmailArgs = {
   input: VerifyEmailInput;
 };
@@ -553,6 +674,15 @@ export type OrderItemResponse = {
   __typename?: 'OrderItemResponse';
   id?: Maybe<ProductPayload>;
   name?: Maybe<Scalars['String']>;
+  price: Scalars['Float'];
+  quantity: Scalars['Float'];
+};
+
+export type OrderItemType = {
+  __typename?: 'OrderItemType';
+  id: Scalars['String'];
+  image: Scalars['String'];
+  name: Scalars['String'];
   price: Scalars['Float'];
   quantity: Scalars['Float'];
 };
@@ -674,6 +804,8 @@ export type Query = {
   getListProduct: GetListProductResponse;
   getMe: UserDtoType;
   getProduct: GetProductResponse;
+  getSlider: SliderResponse;
+  getVoucher: VoucherResponse;
   isFavoriteProduct: BooleanPayload;
   listCart: ListCartType;
   listComment: ListCommentResponse;
@@ -682,8 +814,10 @@ export type Query = {
   listMessage: ListMessageResponse;
   listOrderAdmin: ListOrderResponse;
   listOrderUser: ListOrderResponse;
+  listSlider: ListSliderResponse;
   listType: GetListTypeResponse;
   listUser: ListUserResponse;
+  listVoucher: ListVoucherResponse;
 };
 
 
@@ -699,6 +833,16 @@ export type QueryGetListProductArgs = {
 
 export type QueryGetProductArgs = {
   input: ReadProductInputDto;
+};
+
+
+export type QueryGetSliderArgs = {
+  input: GetSliderInput;
+};
+
+
+export type QueryGetVoucherArgs = {
+  input: ReadVoucherInput;
 };
 
 
@@ -726,8 +870,22 @@ export type QueryListMessageArgs = {
   input: ListMessageInput;
 };
 
+
+export type QueryListSliderArgs = {
+  input: ListSliderInput;
+};
+
+
+export type QueryListVoucherArgs = {
+  input: ListVoucherInput;
+};
+
 export type ReadProductInputDto = {
   productId: Scalars['String'];
+};
+
+export type ReadVoucherInput = {
+  _id: Scalars['String'];
 };
 
 export type RegisterUserInputDto = {
@@ -774,6 +932,20 @@ export enum ShippingStatus {
   Shipping = 'SHIPPING'
 }
 
+export type SliderResponse = {
+  __typename?: 'SliderResponse';
+  _id: Scalars['String'];
+  mediaId?: Maybe<Scalars['String']>;
+  position: Scalars['Float'];
+  redirectUrl: Scalars['String'];
+  type: SliderType;
+};
+
+export enum SliderType {
+  Image = 'IMAGE',
+  Video = 'VIDEO'
+}
+
 export type Subscription = {
   __typename?: 'Subscription';
   onSendMessage: CommentResponse;
@@ -805,6 +977,26 @@ export type UpdateProfileInputDto = {
 export type UpdateProfileResponse = {
   __typename?: 'UpdateProfileResponse';
   updated: Scalars['Boolean'];
+};
+
+export type UpdateSliderInput = {
+  mediaId?: InputMaybe<Scalars['String']>;
+  position?: InputMaybe<Scalars['Float']>;
+  redirectUrl?: InputMaybe<Scalars['String']>;
+  sliderId?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<SliderType>;
+};
+
+export type UpdateVoucherInput = {
+  _id: Scalars['String'];
+  code: Scalars['String'];
+  endTime: Scalars['String'];
+  maxDiscount: Scalars['Float'];
+  maxUserUse: Scalars['Float'];
+  percent: Scalars['Float'];
+  productIds: Array<Scalars['String']>;
+  quantity: Scalars['Float'];
+  startTime: Scalars['String'];
 };
 
 export type UserDtoType = {
@@ -865,6 +1057,25 @@ export type VerifyPhoneResponse = {
   __typename?: 'VerifyPhoneResponse';
   verified: Scalars['Boolean'];
 };
+
+export type VoucherResponse = {
+  __typename?: 'VoucherResponse';
+  _id: Scalars['String'];
+  code: Scalars['String'];
+  endTime: Scalars['Float'];
+  maxDiscount: Scalars['Float'];
+  maxUserUse: Scalars['Float'];
+  percent: Scalars['Float'];
+  productIds: Array<Scalars['String']>;
+  quantity: Scalars['Float'];
+  startTime: Scalars['Float'];
+};
+
+export enum VoucherStatus {
+  Applying = 'APPLYING',
+  Expired = 'EXPIRED',
+  Upcoming = 'UPCOMING'
+}
 
 export type AdminLoginMutationVariables = Exact<{
   input: AdminInputDto;
@@ -967,7 +1178,7 @@ export type GetListProductQueryVariables = Exact<{
 }>;
 
 
-export type GetListProductQuery = { __typename?: 'Query', getListProduct: { __typename?: 'GetListProductResponse', products?: Array<{ __typename?: 'ProductPayload', _id?: string | null, name?: string | null, createdAt?: number | null, updatedAt?: number | null, image?: { __typename?: 'Media', url?: string | null } | null }> | null } };
+export type GetListProductQuery = { __typename?: 'Query', getListProduct: { __typename?: 'GetListProductResponse', products?: Array<{ __typename?: 'ProductPayload', _id?: string | null, name?: string | null, price?: number | null, countInStock?: number | null, totalSold?: number | null, createdAt?: number | null, updatedAt?: number | null, image?: { __typename?: 'Media', url?: string | null } | null }> | null } };
 
 export type GetProductQueryVariables = Exact<{
   input: ReadProductInputDto;
@@ -987,6 +1198,41 @@ export type UpdateProductMutationVariables = Exact<{
 
 
 export type UpdateProductMutation = { __typename?: 'Mutation', updateProduct: { __typename?: 'BooleanPayload', success?: boolean | null } };
+
+export type CreateSliderMutationVariables = Exact<{
+  input: CreateSliderInput;
+}>;
+
+
+export type CreateSliderMutation = { __typename?: 'Mutation', createSlider: { __typename?: 'SliderResponse', _id: string } };
+
+export type DeleteSliderMutationVariables = Exact<{
+  input: DeleteSliderInput;
+}>;
+
+
+export type DeleteSliderMutation = { __typename?: 'Mutation', deleteSlider: { __typename?: 'BooleanPayload', success?: boolean | null } };
+
+export type GetSliderQueryVariables = Exact<{
+  input: GetSliderInput;
+}>;
+
+
+export type GetSliderQuery = { __typename?: 'Query', getSlider: { __typename?: 'SliderResponse', _id: string, mediaId?: string | null, position: number, type: SliderType, redirectUrl: string } };
+
+export type ListSliderQueryVariables = Exact<{
+  input: ListSliderInput;
+}>;
+
+
+export type ListSliderQuery = { __typename?: 'Query', listSlider: { __typename?: 'ListSliderResponse', sliders?: Array<{ __typename?: 'SliderResponse', _id: string, mediaId?: string | null, position: number, type: SliderType, redirectUrl: string }> | null } };
+
+export type UpdateSliderMutationVariables = Exact<{
+  input: UpdateSliderInput;
+}>;
+
+
+export type UpdateSliderMutation = { __typename?: 'Mutation', updateSlider: { __typename?: 'BooleanPayload', success?: boolean | null } };
 
 export type ListUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1420,6 +1666,9 @@ export const GetListProductDocument = `
     products {
       _id
       name
+      price
+      countInStock
+      totalSold
       image {
         url
       }
@@ -1528,6 +1777,118 @@ export const useUpdateProductMutation = <
     useMutation<UpdateProductMutation, TError, UpdateProductMutationVariables, TContext>(
       ['updateProduct'],
       (variables?: UpdateProductMutationVariables) => fetcher<UpdateProductMutation, UpdateProductMutationVariables>(client, UpdateProductDocument, variables, headers)(),
+      options
+    );
+export const CreateSliderDocument = `
+    mutation createSlider($input: CreateSliderInput!) {
+  createSlider(input: $input) {
+    _id
+  }
+}
+    `;
+export const useCreateSliderMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateSliderMutation, TError, CreateSliderMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateSliderMutation, TError, CreateSliderMutationVariables, TContext>(
+      ['createSlider'],
+      (variables?: CreateSliderMutationVariables) => fetcher<CreateSliderMutation, CreateSliderMutationVariables>(client, CreateSliderDocument, variables, headers)(),
+      options
+    );
+export const DeleteSliderDocument = `
+    mutation deleteSlider($input: DeleteSliderInput!) {
+  deleteSlider(input: $input) {
+    success
+  }
+}
+    `;
+export const useDeleteSliderMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteSliderMutation, TError, DeleteSliderMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteSliderMutation, TError, DeleteSliderMutationVariables, TContext>(
+      ['deleteSlider'],
+      (variables?: DeleteSliderMutationVariables) => fetcher<DeleteSliderMutation, DeleteSliderMutationVariables>(client, DeleteSliderDocument, variables, headers)(),
+      options
+    );
+export const GetSliderDocument = `
+    query getSlider($input: GetSliderInput!) {
+  getSlider(input: $input) {
+    _id
+    mediaId
+    position
+    type
+    redirectUrl
+  }
+}
+    `;
+export const useGetSliderQuery = <
+      TData = GetSliderQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetSliderQueryVariables,
+      options?: UseQueryOptions<GetSliderQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetSliderQuery, TError, TData>(
+      ['getSlider', variables],
+      fetcher<GetSliderQuery, GetSliderQueryVariables>(client, GetSliderDocument, variables, headers),
+      options
+    );
+export const ListSliderDocument = `
+    query listSlider($input: ListSliderInput!) {
+  listSlider(input: $input) {
+    sliders {
+      _id
+      mediaId
+      position
+      type
+      redirectUrl
+    }
+  }
+}
+    `;
+export const useListSliderQuery = <
+      TData = ListSliderQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ListSliderQueryVariables,
+      options?: UseQueryOptions<ListSliderQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ListSliderQuery, TError, TData>(
+      ['listSlider', variables],
+      fetcher<ListSliderQuery, ListSliderQueryVariables>(client, ListSliderDocument, variables, headers),
+      options
+    );
+export const UpdateSliderDocument = `
+    mutation updateSlider($input: UpdateSliderInput!) {
+  updateSlider(input: $input) {
+    success
+  }
+}
+    `;
+export const useUpdateSliderMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateSliderMutation, TError, UpdateSliderMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateSliderMutation, TError, UpdateSliderMutationVariables, TContext>(
+      ['updateSlider'],
+      (variables?: UpdateSliderMutationVariables) => fetcher<UpdateSliderMutation, UpdateSliderMutationVariables>(client, UpdateSliderDocument, variables, headers)(),
       options
     );
 export const ListUserDocument = `

@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { BsBoxSeam } from 'react-icons/bs';
 import { MdMessage } from 'react-icons/md';
 import { FaProductHunt } from 'react-icons/fa';
+import { MdOutlineSlideshow } from 'react-icons/md';
+
 const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, ref: Ref<HTMLDivElement>) => {
   const router = useRouter();
 
@@ -28,6 +30,20 @@ const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, r
             </div>
             <div>
               <p>Tổng Quan</p>
+            </div>
+          </div>
+        </Link>
+        <Link href="/slider">
+          <div
+            className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
+              router.pathname == '/slider' ? 'bg-white text-blue-700' : 'text-white hover:bg-white hover:text-blue-700'
+            }`}
+          >
+            <div className="mr-2">
+              <MdOutlineSlideshow className="h-5 w-5" />
+            </div>
+            <div>
+              <p>Trình chiếu</p>
             </div>
           </div>
         </Link>

@@ -14,18 +14,22 @@ const ProductType = () => {
       <div className="my-4 ">
         <input
           type="text"
-          className="px-4 py-2 border border-gray-300 rounded-lg mr-2 focus:outline-none focus:border-blue-500"
+          className="px-4 py-2 w-80 border border-gray-300 rounded-lg mr-2 focus:outline-none focus:border-blue-500"
           placeholder="Nhập tên loại"
           value={nameType}
           onChange={e => setNameType(e.target.value)}
         />
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+          className="px-4 py-2 bg-blue-500 text-[#FF0097] rounded-md hover:bg-blue-700"
           onClick={() => {
             handleCreateType({ name: nameType.toUpperCase() }), setNameType('');
           }}
+          style={{
+            background:
+              'linear-gradient(238.04deg, rgba(0, 218, 255, 0.2) -32.33%, rgba(128, 43, 195, 0.2) 28.78%, rgba(255, 0, 151, 0.2) 67.37%, rgba(246, 160, 26, 0.2) 128.48%)'
+          }}
         >
-          {isLoading ? 'Đang Thêm...' : 'Thêm'}
+          {isLoading ? 'Đang Thêm...' : '+ Thêm Mới'}
         </button>
       </div>
       <table className="table-auto w-full">

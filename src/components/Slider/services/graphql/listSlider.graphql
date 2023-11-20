@@ -1,0 +1,11 @@
+query listSlider($input: ListSliderInput!) {
+  listSlider(input: $input) {
+    sliders {
+      _id
+      mediaId
+      position
+      type
+      redirectUrl
+    }
+  }
+}

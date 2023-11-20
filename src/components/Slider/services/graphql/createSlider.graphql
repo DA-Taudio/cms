@@ -1,0 +1,5 @@
+mutation createSlider($input: CreateSliderInput!) {
+  createSlider(input: $input) {
+    _id
+  }
+}

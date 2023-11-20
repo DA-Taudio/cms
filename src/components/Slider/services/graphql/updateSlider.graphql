@@ -1,0 +1,5 @@
+mutation updateSlider($input: UpdateSliderInput!) {
+  updateSlider(input: $input) {
+    success
+  }
+}

@@ -1,0 +1,9 @@
+query getSlider($input: GetSliderInput!) {
+  getSlider(input: $input) {
+    _id
+    mediaId
+    position
+    type
+    redirectUrl
+  }
+}

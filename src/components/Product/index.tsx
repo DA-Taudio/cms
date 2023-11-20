@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import useDeleteProduct from './services/hook/useDeleteProduct';
 import { MdVisibility } from 'react-icons/md';
 import ModalConfirm from '../ModalConfirm';
+import { formatCurrency } from '@/utils/format-currency';
 const customStyles = {
   cells: {
     style: {
@@ -48,11 +49,15 @@ const Product = () => {
     // { name: 'Id', selector: (row: any) => row._id },
     {
       name: 'Hình ảnh',
+      width: '150px',
       cell: (row: any) => (
-        <Image src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}${row.image.url}`} alt="" width={70} height={90} />
+        <Image src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}${row.image.url}`} alt="" width={100} height={120} />
       )
     },
-    { name: 'Tên Sản Phẩm', selector: (row: any) => row.name, sortable: true },
+    { name: 'Tên Sản Phẩm', width: '600px', selector: (row: any) => row.name, sortable: true },
+    { name: 'Giá', width: '120px', selector: (row: any) => formatCurrency(row.price), sortable: true },
+    { name: 'SL Còn', width: '120px', selector: (row: any) => row.countInStock, sortable: true },
+    { name: 'Đã Bán', width: '120px', selector: (row: any) => row.totalSold, sortable: true },
     {
       name: 'Ngày Cập Nhật',
       selector: (row: any) => {
@@ -79,11 +84,11 @@ const Product = () => {
       name: 'Tác Vụ',
       cell: (row: any) => (
         <div className="flex">
-          <Link href={`/product/${row._id}`} className="text-2xl mr-3 edit-icon">
-            <MdVisibility />
+          <Link href={`/product/${row._id}`} className="text-2xl mr-3 ">
+            <MdVisibility className="text-green-500 edit-icon" />
           </Link>
           <button className="mr-5" onClick={() => handleEdit(row)}>
-            <AiFillEdit className="edit-icon" />
+            <AiFillEdit className="text-blue-500 edit-icon" />
           </button>
           <button
             onClick={() => {
@@ -95,7 +100,7 @@ const Product = () => {
               });
             }}
           >
-            <AiFillDelete className="edit-icon" />
+            <AiFillDelete className="edit-icon  text-red-500" />
           </button>
         </div>
       )

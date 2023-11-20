@@ -1,0 +1,5 @@
+mutation deleteSlider($input: DeleteSliderInput!) {
+  deleteSlider(input: $input) {
+    success
+  }
+}
