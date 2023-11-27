@@ -7,7 +7,7 @@ interface ISliders {
   pagination: PaginationBaseInput;
 }
 export const useListSlider = (props: ISliders) => {
-  const { data, isLoading } = useListSliderQuery(graphqlClientRequest(), {
+  const { data, isLoading } = useListSliderQuery(graphqlClientRequest(true), {
     input: { ...props }
   });
 

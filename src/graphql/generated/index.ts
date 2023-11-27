@@ -935,7 +935,7 @@ export enum ShippingStatus {
 export type SliderResponse = {
   __typename?: 'SliderResponse';
   _id: Scalars['String'];
-  mediaId?: Maybe<Scalars['String']>;
+  mediaId?: Maybe<Media>;
   position: Scalars['Float'];
   redirectUrl: Scalars['String'];
   type: SliderType;
@@ -1218,14 +1218,14 @@ export type GetSliderQueryVariables = Exact<{
 }>;
 
 
-export type GetSliderQuery = { __typename?: 'Query', getSlider: { __typename?: 'SliderResponse', _id: string, mediaId?: string | null, position: number, type: SliderType, redirectUrl: string } };
+export type GetSliderQuery = { __typename?: 'Query', getSlider: { __typename?: 'SliderResponse', _id: string, position: number, type: SliderType, redirectUrl: string, mediaId?: { __typename?: 'Media', url?: string | null } | null } };
 
 export type ListSliderQueryVariables = Exact<{
   input: ListSliderInput;
 }>;
 
 
-export type ListSliderQuery = { __typename?: 'Query', listSlider: { __typename?: 'ListSliderResponse', sliders?: Array<{ __typename?: 'SliderResponse', _id: string, mediaId?: string | null, position: number, type: SliderType, redirectUrl: string }> | null } };
+export type ListSliderQuery = { __typename?: 'Query', listSlider: { __typename?: 'ListSliderResponse', sliders?: Array<{ __typename?: 'SliderResponse', _id: string, position: number, type: SliderType, redirectUrl: string, mediaId?: { __typename?: 'Media', url?: string | null } | null }> | null } };
 
 export type UpdateSliderMutationVariables = Exact<{
   input: UpdateSliderInput;
@@ -1823,7 +1823,9 @@ export const GetSliderDocument = `
     query getSlider($input: GetSliderInput!) {
   getSlider(input: $input) {
     _id
-    mediaId
+    mediaId {
+      url
+    }
     position
     type
     redirectUrl
@@ -1849,7 +1851,9 @@ export const ListSliderDocument = `
   listSlider(input: $input) {
     sliders {
       _id
-      mediaId
+      mediaId {
+        url
+      }
       position
       type
       redirectUrl

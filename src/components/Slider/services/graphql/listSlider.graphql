@@ -2,7 +2,9 @@ query listSlider($input: ListSliderInput!) {
   listSlider(input: $input) {
     sliders {
       _id
-      mediaId
+      mediaId {
+        url
+      }
       position
       type
       redirectUrl
