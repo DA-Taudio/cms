@@ -3,7 +3,7 @@ import React from 'react';
 
 const Slider = () => {
   return (
-    <div className="h-screen">
+    <div className="h-screen ">
       <div className="flex justify-between pt-10">
         <h1 className="font-bold">TRÌNH CHIẾU</h1>
         <button
