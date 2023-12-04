@@ -11,15 +11,19 @@ import {
   PlusCircleOutlined
 } from '@ant-design/icons';
 import { Button } from 'antd';
+import useSliderStore, { SliderStore } from '@/store/useSliderStore';
+import { useRouter } from 'next/router';
 const ListSlider = () => {
   const url = process.env.NEXT_PUBLIC_MEDIA_ENDPOINT;
+  const { setSliderId } = useSliderStore(store => store as SliderStore);
+  const router = useRouter();
+
   const { listSlider, isLoading } = useListSlider({
     pagination: {
       limit: 1000,
       page: 1
     }
   });
-  console.log(listSlider);
 
   const handleDragDrop = (results: any) => {
     const { source, destination, type, draggableId } = results;
@@ -81,9 +85,8 @@ const ListSlider = () => {
                 type="primary"
                 ghost
                 onClick={() => {
-                  // setVisibleUpdateModal(true);
-                  // setItemSelected(item);
-                  console.log(item);
+                  setSliderId(item._id);
+                  router.push('/slider/update');
                 }}
               >
                 <EditOutlined />

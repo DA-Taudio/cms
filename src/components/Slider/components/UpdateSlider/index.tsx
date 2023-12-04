@@ -17,29 +17,19 @@ const UpdateSlider = () => {
   const { sliderId } = useSliderStore(store => store as SliderStore);
   const { result, isLoading } = useGetSlider({
     sliderId
-  });
+  }) as any;
+  console.log(result);
 
-  //   useEffect(() => {
-  //     if (SliderId) {
-  //       setImageUrl(`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}${result?.Slider?.image?.url}`);
-  //       setImageId(result?.Slider?.image?._id);
-  //     }
-  //   }, [isLoading]);
+  useEffect(() => {
+    if (sliderId) {
+      setImageUrl(`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}${result?.mediaId?.url}`);
+      setImageId(result?.mediaId?._id);
+    }
+  }, [isLoading]);
 
   const initialValues = {
-    name: result.slider?.name,
-    type: result.slider?.type,
-    description: result.slider?.description,
-    price: result.slider?.price,
-    countInStock: result.slider?.countInStock,
-    manufacturer: result.slider?.manufacturer,
-    modelNumber: result.slider?.modelNumber,
-    dimensions: result.slider?.dimensions,
-    weight: result.slider?.weight,
-    connectivity: result.slider?.connectivity,
-    powerSource: result.slider?.powerSource,
-    compatibility: result.slider?.compatibility,
-    warranty: result.slider?.warranty
+    redirectUrl: result.redirectUrl,
+    type: result.type
   };
 
   const handleImageIdChange = (url: string) => {
@@ -51,8 +41,8 @@ const UpdateSlider = () => {
       Notification.Info('Vui lòng tải lên hình ảnh!');
     } else {
       handleUpdateSlider({
-        SliderId,
-        updateInput: { ...values, image: imageId }
+        sliderId,
+        updateInput: { ...values, mediaId: imageId }
       });
     }
   };
@@ -60,24 +50,11 @@ const UpdateSlider = () => {
   const validateForm = (values: any) => {
     const errors: any = {};
 
-    // Kiểm tra các trường bắt buộc
-    if (!values.name) {
-      errors.name = 'Tên sản phẩm là bắt buộc';
-    }
-    if (!values.type) {
-      errors.type = 'Loại sản phẩm là bắt buộc';
-    }
-
-    if (!values.description) {
-      errors.description = 'Mô tả là bắt buộc';
-    }
-    // Thêm các kiểm tra khác cho các trường khác
-
     return errors;
   };
   return (
     <>
-      {SliderId ? (
+      {sliderId ? (
         <div>
           <Formik
             initialValues={initialValues}
@@ -85,90 +62,36 @@ const UpdateSlider = () => {
             validate={validateForm}
             enableReinitialize={true}
           >
-            <Form className="flex flex-wrap bg-slate-400">
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="name" className="block text-xl font-medium text-black">
-                  Tên sản phẩm:
-                </label>
-                <Field
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="name" component="div" className="text-red-500 text-sm mt-2" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="type" className="block text-xl font-medium text-black">
-                  Loại sản phẩm:
-                </label>
-                <div className="flex">
-                  <ComboBox
-                    id="type"
-                    name="type"
-                    options={listType}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
-                  />
-                  <button onClick={() => router.push('/Slider/type')}>
-                    <IoMdAddCircle className="text-4xl mx-3" />
-                  </button>
-                </div>
-                <ErrorMessage name="type" component="div" className="text-red-500 text-sm mt-2" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="description" className="block text-xl font-medium text-black">
-                  Mô tả:
-                </label>
-                <Field
-                  as="textarea"
-                  id="description"
-                  name="description"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="description" component="div" className="text-red-500 text-sm mt-2" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="price" className="block text-xl font-medium text-black">
-                  Giá:
-                </label>
-                <Field
-                  type="number"
-                  id="price"
-                  name="price"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="price" component="div" className="text-red-500 text-sm" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="countInStock" className="block text-xl font-medium text-black">
-                  Số lượng trong kho:
-                </label>
-                <Field
-                  type="number"
-                  id="countInStock"
-                  name="countInStock"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="countInStock" component="div" className="text-red-500 text-sm" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="image" className="block text-xl font-medium text-black">
-                  Hình ảnh:
+            <Form className="flex flex-col">
+              <div className="pb-5">
+                <label htmlFor="image" className="block text-lg font-medium text-black">
+                  Hình ảnh / Video:
                 </label>
                 <ImageUploader onImageIdChange={handleImageIdChange} imageUrl={imageUrl} setImageUrl={setImageUrl} />
               </div>
+              <div>
+                <label htmlFor="redirectUrl" className="block text-lg font-medium text-black">
+                  Link chuyển tiếp:
+                </label>
+                <Field
+                  type="text"
+                  id="redirectUrl"
+                  name="redirectUrl"
+                  className="w-1/3 mt-2  p-2 rounded-md border border-gray-500"
+                />
+                <ErrorMessage name="redirectUrl" component="div" className="text-red-500 text-sm mt-2" />
+              </div>
 
-              <div className="w-4/12 p-10">
+              <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="inline-flex float-right p-7 py-5 mr-20 mb-10 justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="px-4 py-2 bg-blue-500 text-[#FF0097] font-bold rounded-md hover:bg-blue-700 w-32 text-center hover:cursor-pointer"
+                  style={{
+                    background:
+                      'linear-gradient(238.04deg, rgba(0, 218, 255, 0.2) -32.33%, rgba(128, 43, 195, 0.2) 28.78%, rgba(255, 0, 151, 0.2) 67.37%, rgba(246, 160, 26, 0.2) 128.48%)'
+                  }}
                 >
-                  {UpdateSliderLoading ? 'Đang cập nhật ...' : 'Cập Nhật sản phẩm'}
+                  {UpdateSliderLoading ? 'Đang cập nhật ...' : 'Cập Nhật'}
                 </button>
               </div>
             </Form>

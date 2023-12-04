@@ -17,9 +17,10 @@ const useUpdateSlider = () => {
   });
   const handleUpdateSlider = useCallback(
     (values: any) => {
-      return updateSlider({
-        input: values
-      });
+      console.log('values', values);
+      // return updateSlider({
+      //   input: values
+      // });
     },
     [updateSlider]
   );
