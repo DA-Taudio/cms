@@ -8,7 +8,7 @@ import { useCallback } from 'react';
 const useCreateProduct = () => {
   const queryClient = useQueryClient();
 
-  const { mutate: createProduct, isLoading: CreateProductLoading } = useCreateProductMutation(graphqlClientRequest(), {
+  const { mutate: createProduct, isLoading: createProductLoading } = useCreateProductMutation(graphqlClientRequest(), {
     onSuccess: data => {
       if (data.createProduct.success) {
         Notification.Success('Them san pham thanh cong');
@@ -27,6 +27,6 @@ const useCreateProduct = () => {
     [createProduct]
   );
 
-  return { handleCreateProduct, CreateProductLoading };
+  return { handleCreateProduct, createProductLoading };
 };
 export default useCreateProduct;
