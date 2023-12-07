@@ -24,7 +24,7 @@ const AddProduct = () => {
   const [imageId, setImageId] = useState('');
   const [imageUrl, setImageUrl] = useState<any>();
 
-  const { handleCreateProduct } = useCreateProduct();
+  const { handleCreateProduct, createProductLoading } = useCreateProduct();
   const { listType } = useListType();
   const router = useRouter();
 
@@ -73,6 +73,15 @@ const AddProduct = () => {
     if (!values.description) {
       errors.description = 'Mô tả là bắt buộc';
     }
+
+    if (values.price <= 0) {
+      errors.price = 'Giá sản phẩm phải lớn hơn không';
+    }
+
+    if (values.countInStock <= 0) {
+      errors.countInStock = 'Số lượng sản phẩm phải lớn hơn không';
+    }
+
     // Thêm các kiểm tra khác cho các trường khác
 
     return errors;
@@ -81,193 +90,198 @@ const AddProduct = () => {
     <div>
       <Formik initialValues={{ ...initialValues }} onSubmit={handleSubmit} validate={validateForm}>
         {props => (
-          <Form className="flex flex-wrap bg-slate-400">
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="name" className="block text-xl font-medium text-black">
-                Tên sản phẩm:
+          <Form className="flex flex-wrap ">
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="name" className="block text-md font-medium text-black">
+                <span className="text-red-500  text-md ">*</span> Tên sản phẩm:
               </label>
               <Field
                 type="text"
                 id="name"
                 name="name"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="name" component="div" className="text-red-500 text-sm mt-2" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="type" className="block text-xl font-medium text-black">
-                Loại sản phẩm:
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="type" className="block text-md font-medium text-black">
+                <span className="text-red-500  text-md ">*</span> Loại sản phẩm:
               </label>
               <div className="flex">
                 <ComboBox
                   id="type"
                   name="type"
                   options={listType}
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
                 />
                 <button onClick={() => router.push('/product/type')}>
-                  <IoMdAddCircle className="text-4xl mx-3" />
+                  <IoMdAddCircle className="text-md mx-3" />
                 </button>
               </div>
               <ErrorMessage name="type" component="div" className="text-red-500 text-sm mt-2" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="description" className="block text-xl font-medium text-black">
-                Mô tả:
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="description" className="block text-md font-medium text-black">
+                <span className="text-red-500  text-md ">*</span> Mô tả:
               </label>
               <Field
                 as="textarea"
                 id="description"
                 name="description"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="description" component="div" className="text-red-500 text-sm mt-2" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="price" className="block text-xl font-medium text-black">
-                Giá:
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="price" className="block text-md font-medium text-black">
+                <span className="text-red-500  text-md ">*</span> Giá:
               </label>
               <Field
                 type="number"
                 id="price"
                 name="price"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="price" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="countInStock" className="block text-xl font-medium text-black">
-                Số lượng trong kho:
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="countInStock" className="block text-md font-medium text-black">
+                <span className="text-red-500  text-md ">*</span> Số lượng trong kho:
               </label>
               <Field
                 type="number"
                 id="countInStock"
                 name="countInStock"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="countInStock" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="image" className="block text-xl font-medium text-black">
-                Hình ảnh:
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="image" className="block text-md font-medium text-black">
+                <span className="text-red-500  text-md ">*</span> Hình ảnh:
               </label>
               <ImageUploader onImageIdChange={handleImageIdChange} imageUrl={imageUrl} setImageUrl={setImageUrl} />
+              {}
             </div>
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="manufacturer" className="block text-xl font-medium text-black">
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="manufacturer" className="block text-md font-medium text-black">
                 Thương Hiệu:
               </label>
               <Field
                 type="text"
                 id="manufacturer"
                 name="manufacturer"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="manufacturer" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="modelNumber" className="block text-xl font-medium text-black">
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="modelNumber" className="block text-md font-medium text-black">
                 Mã số mô hình:
               </label>
               <Field
                 type="text"
                 id="modelNumber"
                 name="modelNumber"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="modelNumber" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="dimensions" className="block text-xl font-medium text-black">
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="dimensions" className="block text-md font-medium text-black">
                 Kích thước:
               </label>
               <Field
                 type="text"
                 id="dimensions"
                 name="dimensions"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="dimensions" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="weight" className="block text-xl font-medium text-black">
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="weight" className="block text-md font-medium text-black">
                 Trọng lượng:
               </label>
               <Field
                 type="text"
                 id="weight"
                 name="weight"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="weight" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="connectivity" className="block text-xl font-medium text-black">
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="connectivity" className="block text-md font-medium text-black">
                 Kết nối:
               </label>
               <Field
                 type="text"
                 id="connectivity"
                 name="connectivity"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="connectivity" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="powerSource" className="block text-xl font-medium text-black">
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="powerSource" className="block text-md font-medium text-black">
                 Nguồn điện:
               </label>
               <Field
                 type="text"
                 id="powerSource"
                 name="powerSource"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="powerSource" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="compatibility" className="block text-xl font-medium text-black">
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="compatibility" className="block text-md font-medium text-black">
                 Khả năng tương thích:
               </label>
               <Field
                 type="text"
                 id="compatibility"
                 name="compatibility"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="compatibility" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div className="mb-4 w-4/12 p-5">
-              <label htmlFor="warranty" className="block text-xl font-medium text-black">
+            <div className="mb-3 w-4/12 p-5">
+              <label htmlFor="warranty" className="block text-md font-medium text-black">
                 Bảo hành:
               </label>
               <Field
                 type="text"
                 id="warranty"
                 name="warranty"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 bg-white"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
               />
               <ErrorMessage name="warranty" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div className="w-4/12 p-10">
+            <div className="w-4/12 p-10 flex justify-end">
               <button
                 type="submit"
-                className="inline-flex float-right p-7 py-5 mr-20 mb-10 justify-center  border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="px-4 py-2 bg-blue-500 text-[#FF0097] rounded-md hover:bg-blue-700"
+                style={{
+                  background:
+                    'linear-gradient(238.04deg, rgba(0, 218, 255, 0.2) -32.33%, rgba(128, 43, 195, 0.2) 28.78%, rgba(255, 0, 151, 0.2) 67.37%, rgba(246, 160, 26, 0.2) 128.48%)'
+                }}
               >
-                Thêm sản phẩm
+                {createProductLoading ? 'Đang thêm mới ...' : 'Thêm sản phẩm'}
               </button>
             </div>
           </Form>

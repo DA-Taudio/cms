@@ -66,13 +66,13 @@ const UpdateSlider = () => {
           >
             <Form className="flex flex-col">
               <div className="pb-5">
-                <label htmlFor="image" className="block text-lg font-medium text-black">
-                  Hình ảnh / Video:
+                <label htmlFor="image" className="block text-md font-medium text-black">
+                  Hình ảnh:
                 </label>
                 <ImageUploader onImageIdChange={handleImageIdChange} imageUrl={imageUrl} setImageUrl={setImageUrl} />
               </div>
               <div>
-                <label htmlFor="redirectUrl" className="block text-lg font-medium text-black">
+                <label htmlFor="redirectUrl" className="block text-md font-medium text-black">
                   Link chuyển tiếp:
                 </label>
                 <Field

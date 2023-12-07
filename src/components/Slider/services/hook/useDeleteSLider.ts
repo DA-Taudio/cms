@@ -11,7 +11,7 @@ const useDeleteSlider = () => {
   const { mutate: deleteSlider, isLoading } = useDeleteSliderMutation(graphqlClientRequest(), {
     onSuccess: data => {
       if (data.deleteSlider.success) {
-        queryClient.invalidateQueries(['getListSlider']);
+        queryClient.invalidateQueries(['listSlider']);
         Notification.Success('Xoá thành công!');
       }
     },

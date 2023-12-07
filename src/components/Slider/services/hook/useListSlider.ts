@@ -12,7 +12,7 @@ export const useListSlider = (props: ISliders) => {
   });
 
   const listSlider = useMemo(() => {
-    return data?.listSlider || {};
+    return data?.listSlider.sliders || [];
   }, [data]);
 
   return { listSlider, isLoading };

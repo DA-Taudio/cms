@@ -53,8 +53,8 @@ const ImageUploader = ({ onImageIdChange, imageUrl, setImageUrl }: any) => {
 
   const uploadButton = (
     <div>
-      {loading ? <LoadingOutlined className="text-white" /> : <PlusOutlined className="text-white" />}
-      <div style={{ marginTop: 8, borderRadius: '5px', fontWeight: 'bold', color: 'white' }}>Upload</div>
+      {loading ? <LoadingOutlined className="text-black" /> : <PlusOutlined className="text-black" />}
+      <div style={{ marginTop: 8, borderRadius: '5px', fontWeight: 'bold', color: 'black' }}>Upload</div>
     </div>
   );
 
@@ -63,7 +63,7 @@ const ImageUploader = ({ onImageIdChange, imageUrl, setImageUrl }: any) => {
       <Upload
         name="image"
         listType="picture-card"
-        className="avatar-uploader ml-32"
+        className="avatar-uploader pl-32"
         showUploadList={false}
         beforeUpload={beforeUpload}
         onChange={handleChange}

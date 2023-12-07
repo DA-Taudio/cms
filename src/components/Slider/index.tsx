@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useListSlider } from './services/hook/useListSlider';
 import { LoadingCenter } from '../Loading';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
@@ -13,11 +13,19 @@ import {
 import { Button } from 'antd';
 import useSliderStore, { SliderStore } from '@/store/useSliderStore';
 import { useRouter } from 'next/router';
+import useUpdateSlider from './services/hook/useUpdateSlider';
+import useDeleteSlider from './services/hook/useDeleteSLider';
+import ModalConfirm from '../ModalConfirm';
 const ListSlider = () => {
   const url = process.env.NEXT_PUBLIC_MEDIA_ENDPOINT;
   const { setSliderId } = useSliderStore(store => store as SliderStore);
   const router = useRouter();
-
+  const { handleUpdateSlider } = useUpdateSlider();
+  const { handleDeleteSlider } = useDeleteSlider();
+  const [isOpen, setIsOpen] = useState<any>(false);
+  const [prop, setProp] = useState<any>({});
+  const [id, setId] = useState<any>();
+  const [sliders, setSliders] = useState<any>([]);
   const { listSlider, isLoading } = useListSlider({
     pagination: {
       limit: 1000,
@@ -25,12 +33,36 @@ const ListSlider = () => {
     }
   });
 
+  const handleDelete = () => {
+    handleDeleteSlider({ sliderId: id });
+    setIsOpen(false);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    if (listSlider?.length > 0) setSliders(listSlider);
+  }, [listSlider]);
+
   const handleDragDrop = (results: any) => {
     const { source, destination, type, draggableId } = results;
 
     if (!destination) return;
 
     if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+
+    // Create a new array by splicing the dragged slider and inserting it at the new position
+    const updatedSliders = [...sliders];
+    const [removed] = updatedSliders.splice(source.index, 1);
+    updatedSliders.splice(destination.index, 0, removed);
+
+    // Update the state with the new array
+    setSliders(updatedSliders);
+    handleUpdateSlider({
+      sliderId: draggableId,
+      position: results?.destination?.index
+    });
   };
 
   const renderSliderItem = (item: any, index: number) => {
@@ -96,13 +128,13 @@ const ListSlider = () => {
                 type="primary"
                 danger
                 ghost
-                onClick={async () => {
-                  // setIdSlider(item._id);
-                  // setIsOpen(true);
-                  // setProp({
-                  //   title: 'Xác nhận',
-                  //   content: 'Bạn chắc chắn muốn xóa bản ghi này ?'
-                  // });
+                onClick={() => {
+                  setId(item._id);
+                  setIsOpen(true);
+                  setProp({
+                    title: 'XÁC NHẬN',
+                    content: 'Bạn có chắc chắn xoá trình chiếu này?'
+                  });
                 }}
               >
                 <DeleteOutlined />
@@ -122,7 +154,7 @@ const ListSlider = () => {
           <Droppable droppableId="droppableId" type="group1">
             {provided => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
-                {listSlider?.sliders?.map((item: any, index: any) => renderSliderItem(item, index))}
+                {sliders?.map((item: any, index: any) => renderSliderItem(item, index))}
 
                 {provided.placeholder}
               </div>
@@ -130,6 +162,7 @@ const ListSlider = () => {
           </Droppable>
         </DragDropContext>
       )}
+      <ModalConfirm isOpen={isOpen} onOk={handleDelete} onCancel={handleClose} prop={prop} />
     </>
   );
 };
