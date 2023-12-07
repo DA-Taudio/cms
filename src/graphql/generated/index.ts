@@ -1218,7 +1218,7 @@ export type GetSliderQueryVariables = Exact<{
 }>;
 
 
-export type GetSliderQuery = { __typename?: 'Query', getSlider: { __typename?: 'SliderResponse', _id: string, position: number, type: SliderType, redirectUrl: string, mediaId?: { __typename?: 'Media', url?: string | null } | null } };
+export type GetSliderQuery = { __typename?: 'Query', getSlider: { __typename?: 'SliderResponse', _id: string, position: number, type: SliderType, redirectUrl: string, mediaId?: { __typename?: 'Media', _id?: string | null, url?: string | null } | null } };
 
 export type ListSliderQueryVariables = Exact<{
   input: ListSliderInput;
@@ -1824,6 +1824,7 @@ export const GetSliderDocument = `
   getSlider(input: $input) {
     _id
     mediaId {
+      _id
       url
     }
     position

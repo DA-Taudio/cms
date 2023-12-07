@@ -18,10 +18,9 @@ const UpdateSlider = () => {
   const { result, isLoading } = useGetSlider({
     sliderId
   }) as any;
-  console.log(result);
 
   useEffect(() => {
-    if (sliderId) {
+    if (sliderId && result) {
       setImageUrl(`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}${result?.mediaId?.url}`);
       setImageId(result?.mediaId?._id);
     }
@@ -42,7 +41,10 @@ const UpdateSlider = () => {
     } else {
       handleUpdateSlider({
         sliderId,
-        updateInput: { ...values, mediaId: imageId }
+        ...values,
+        mediaId: imageId,
+        position: result.position,
+        type: 'IMAGE'
       });
     }
   };

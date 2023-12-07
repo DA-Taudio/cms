@@ -2,6 +2,7 @@ query getSlider($input: GetSliderInput!) {
   getSlider(input: $input) {
     _id
     mediaId {
+      _id
       url
     }
     position
