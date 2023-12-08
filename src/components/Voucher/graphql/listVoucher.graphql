@@ -1,0 +1,15 @@
+query listVoucher($input: ListVoucherInput!) {
+  listVoucher(input: $input) {
+    vouchers {
+      _id
+      code
+      percent
+      maxDiscount
+      quantity
+      maxUserUse
+      productIds
+      startTime
+      endTime
+    }
+  }
+}

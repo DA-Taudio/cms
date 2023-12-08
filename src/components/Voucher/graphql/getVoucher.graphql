@@ -1,0 +1,13 @@
+query getVoucher($input: ReadVoucherInput!) {
+  getVoucher(input: $input) {
+    _id
+    code
+    percent
+    maxDiscount
+    quantity
+    maxUserUse
+    productIds
+    startTime
+    endTime
+  }
+}

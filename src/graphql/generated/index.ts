@@ -937,7 +937,7 @@ export type SliderResponse = {
   _id: Scalars['String'];
   mediaId?: Maybe<Media>;
   position: Scalars['Float'];
-  redirectUrl: Scalars['String'];
+  redirectUrl?: Maybe<Scalars['String']>;
   type: SliderType;
 };
 
@@ -1218,14 +1218,14 @@ export type GetSliderQueryVariables = Exact<{
 }>;
 
 
-export type GetSliderQuery = { __typename?: 'Query', getSlider: { __typename?: 'SliderResponse', _id: string, position: number, type: SliderType, redirectUrl: string, mediaId?: { __typename?: 'Media', _id?: string | null, url?: string | null } | null } };
+export type GetSliderQuery = { __typename?: 'Query', getSlider: { __typename?: 'SliderResponse', _id: string, position: number, type: SliderType, redirectUrl?: string | null, mediaId?: { __typename?: 'Media', _id?: string | null, url?: string | null } | null } };
 
 export type ListSliderQueryVariables = Exact<{
   input: ListSliderInput;
 }>;
 
 
-export type ListSliderQuery = { __typename?: 'Query', listSlider: { __typename?: 'ListSliderResponse', sliders?: Array<{ __typename?: 'SliderResponse', _id: string, position: number, type: SliderType, redirectUrl: string, mediaId?: { __typename?: 'Media', url?: string | null } | null }> | null } };
+export type ListSliderQuery = { __typename?: 'Query', listSlider: { __typename?: 'ListSliderResponse', sliders?: Array<{ __typename?: 'SliderResponse', _id: string, position: number, type: SliderType, redirectUrl?: string | null, mediaId?: { __typename?: 'Media', url?: string | null } | null }> | null } };
 
 export type UpdateSliderMutationVariables = Exact<{
   input: UpdateSliderInput;
@@ -1245,6 +1245,41 @@ export type LockOrUnLockUserMutationVariables = Exact<{
 
 
 export type LockOrUnLockUserMutation = { __typename?: 'Mutation', lockOrUnLockUser: { __typename?: 'BooleanPayload', success?: boolean | null } };
+
+export type CreateVoucherMutationVariables = Exact<{
+  input: CreateVoucherInput;
+}>;
+
+
+export type CreateVoucherMutation = { __typename?: 'Mutation', createVoucher: { __typename?: 'VoucherResponse', _id: string } };
+
+export type DeleteVoucherMutationVariables = Exact<{
+  input: ReadVoucherInput;
+}>;
+
+
+export type DeleteVoucherMutation = { __typename?: 'Mutation', deleteVoucher: { __typename?: 'BooleanPayload', success?: boolean | null } };
+
+export type GetVoucherQueryVariables = Exact<{
+  input: ReadVoucherInput;
+}>;
+
+
+export type GetVoucherQuery = { __typename?: 'Query', getVoucher: { __typename?: 'VoucherResponse', _id: string, code: string, percent: number, maxDiscount: number, quantity: number, maxUserUse: number, productIds: Array<string>, startTime: number, endTime: number } };
+
+export type ListVoucherQueryVariables = Exact<{
+  input: ListVoucherInput;
+}>;
+
+
+export type ListVoucherQuery = { __typename?: 'Query', listVoucher: { __typename?: 'ListVoucherResponse', vouchers?: Array<{ __typename?: 'VoucherResponse', _id: string, code: string, percent: number, maxDiscount: number, quantity: number, maxUserUse: number, productIds: Array<string>, startTime: number, endTime: number }> | null } };
+
+export type UpdateVoucherMutationVariables = Exact<{
+  input: UpdateVoucherInput;
+}>;
+
+
+export type UpdateVoucherMutation = { __typename?: 'Mutation', updateVoucher: { __typename?: 'BooleanPayload', success?: boolean | null } };
 
 export type GetAdminQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1953,6 +1988,126 @@ export const useLockOrUnLockUserMutation = <
     useMutation<LockOrUnLockUserMutation, TError, LockOrUnLockUserMutationVariables, TContext>(
       ['lockOrUnLockUser'],
       (variables?: LockOrUnLockUserMutationVariables) => fetcher<LockOrUnLockUserMutation, LockOrUnLockUserMutationVariables>(client, LockOrUnLockUserDocument, variables, headers)(),
+      options
+    );
+export const CreateVoucherDocument = `
+    mutation createVoucher($input: CreateVoucherInput!) {
+  createVoucher(input: $input) {
+    _id
+  }
+}
+    `;
+export const useCreateVoucherMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateVoucherMutation, TError, CreateVoucherMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateVoucherMutation, TError, CreateVoucherMutationVariables, TContext>(
+      ['createVoucher'],
+      (variables?: CreateVoucherMutationVariables) => fetcher<CreateVoucherMutation, CreateVoucherMutationVariables>(client, CreateVoucherDocument, variables, headers)(),
+      options
+    );
+export const DeleteVoucherDocument = `
+    mutation deleteVoucher($input: ReadVoucherInput!) {
+  deleteVoucher(input: $input) {
+    success
+  }
+}
+    `;
+export const useDeleteVoucherMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteVoucherMutation, TError, DeleteVoucherMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteVoucherMutation, TError, DeleteVoucherMutationVariables, TContext>(
+      ['deleteVoucher'],
+      (variables?: DeleteVoucherMutationVariables) => fetcher<DeleteVoucherMutation, DeleteVoucherMutationVariables>(client, DeleteVoucherDocument, variables, headers)(),
+      options
+    );
+export const GetVoucherDocument = `
+    query getVoucher($input: ReadVoucherInput!) {
+  getVoucher(input: $input) {
+    _id
+    code
+    percent
+    maxDiscount
+    quantity
+    maxUserUse
+    productIds
+    startTime
+    endTime
+  }
+}
+    `;
+export const useGetVoucherQuery = <
+      TData = GetVoucherQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetVoucherQueryVariables,
+      options?: UseQueryOptions<GetVoucherQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetVoucherQuery, TError, TData>(
+      ['getVoucher', variables],
+      fetcher<GetVoucherQuery, GetVoucherQueryVariables>(client, GetVoucherDocument, variables, headers),
+      options
+    );
+export const ListVoucherDocument = `
+    query listVoucher($input: ListVoucherInput!) {
+  listVoucher(input: $input) {
+    vouchers {
+      _id
+      code
+      percent
+      maxDiscount
+      quantity
+      maxUserUse
+      productIds
+      startTime
+      endTime
+    }
+  }
+}
+    `;
+export const useListVoucherQuery = <
+      TData = ListVoucherQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ListVoucherQueryVariables,
+      options?: UseQueryOptions<ListVoucherQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ListVoucherQuery, TError, TData>(
+      ['listVoucher', variables],
+      fetcher<ListVoucherQuery, ListVoucherQueryVariables>(client, ListVoucherDocument, variables, headers),
+      options
+    );
+export const UpdateVoucherDocument = `
+    mutation updateVoucher($input: UpdateVoucherInput!) {
+  updateVoucher(input: $input) {
+    success
+  }
+}
+    `;
+export const useUpdateVoucherMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateVoucherMutation, TError, UpdateVoucherMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateVoucherMutation, TError, UpdateVoucherMutationVariables, TContext>(
+      ['updateVoucher'],
+      (variables?: UpdateVoucherMutationVariables) => fetcher<UpdateVoucherMutation, UpdateVoucherMutationVariables>(client, UpdateVoucherDocument, variables, headers)(),
       options
     );
 export const GetAdminDocument = `

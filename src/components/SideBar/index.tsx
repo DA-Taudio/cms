@@ -6,6 +6,8 @@ import { BsBoxSeam } from 'react-icons/bs';
 import { MdMessage } from 'react-icons/md';
 import { FaProductHunt } from 'react-icons/fa';
 import { MdOutlineSlideshow } from 'react-icons/md';
+import Image from 'next/image';
+import { RiCoupon2Line } from 'react-icons/ri';
 
 const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, ref: Ref<HTMLDivElement>) => {
   const router = useRouter();
@@ -74,6 +76,21 @@ const SideBar = forwardRef<HTMLDivElement, { showNav: boolean }>(({ showNav }, r
             </div>
             <div>
               <p>Phân Loại</p>
+            </div>
+          </div>
+        </Link>
+
+        <Link href="/voucher">
+          <div
+            className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
+              router.pathname == '/voucher' ? 'bg-white text-blue-700' : 'text-white hover:bg-white hover:text-blue-700'
+            }`}
+          >
+            <div className="mr-2">
+              <RiCoupon2Line className="h-5 w-5" />
+            </div>
+            <div>
+              <p>Mã giảm giá</p>
             </div>
           </div>
         </Link>

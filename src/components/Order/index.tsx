@@ -17,19 +17,20 @@ import ModalConfirm from '../ModalConfirm';
 const customStyles = {
   cells: {
     style: {
-      fontSize: '16px',
+      fontSize: '15px',
       padding: '4px 15px'
     }
   },
   headRow: {
     style: {
-      backgroundColor: 'black',
-      color: 'white'
+      backgroundColor: '#ccc',
+      color: 'black'
     }
   },
   headCells: {
     style: {
-      fontSize: '18px'
+      fontSize: '16px',
+      fontWeight: 'bold'
     }
   }
 };
@@ -52,7 +53,7 @@ const Order = () => {
       name: 'Khách Hàng',
       selector: (row: any) => (
         <div className="flex items-center">
-          <Avatar props={{ image: process.env.NEXT_PUBLIC_MEDIA_ENDPOINT + row.userId.avatarId.url }} />
+          <Avatar props={{ image: process.env.NEXT_PUBLIC_MEDIA_ENDPOINT + row?.userId?.avatarId?.url }} />
           <span className="ml-1">{row.userId.fullName}</span>
         </div>
       )
@@ -72,9 +73,9 @@ const Order = () => {
       name: 'Danh Sách Sản Phẩm',
       cell: (row: any) => (
         <div>
-          {row.items.map((obj: any) => (
+          {row?.items?.map((obj: any) => (
             <div className="flex " key={obj.id?._id}>
-              <div className="w-2 h-2 rounded-full bg-black my-auto mr-1"> </div>
+              <div className="w-2 h-2 rounded-full bg-blue-700 my-auto mr-1"> </div>
               <ImageItem
                 src={`${process.env.NEXT_PUBLIC_MEDIA_ENDPOINT}${obj?.id?.image?.url || ''}`}
                 className="my-1"
@@ -109,7 +110,7 @@ const Order = () => {
             </div>
           )
         ) : (
-          <div className="font-bold text-slate-500">Thanh toán khi nhận hàng</div>
+          <div className="font-bold text-slate-500">Thanh toán offline</div>
         )
     },
 
@@ -118,15 +119,15 @@ const Order = () => {
     //   selector: (row: any) => <div className="text-sm overflow-x-auto whitespace-nowrap">{row.shippingAddress}</div>
     // },
     {
-      name: 'Xác Nhận Đơn Hàng',
+      name: 'Tác Vụ Đơn Hàng',
       selector: (row: any) => (
         <div className="flex">
-          <Link href={`/order/${row._id}`} className="text-2xl mr-3 edit-icon">
+          <Link href={`/order/${row._id}`} className="text-2xl mr-3 edit-icon  flex items-center ">
             <MdVisibility />
           </Link>
           {row.shippingStatus === ShippingStatus.NotShipped ? (
             <button
-              className="text-white bg-orange-700 p-1 text-sm rounded-md"
+              className="text-white bg-orange-600 px-1 text-sm rounded-md"
               onClick={() => {
                 setId(row._id);
                 setIsOpen(true);
@@ -140,7 +141,7 @@ const Order = () => {
               Xác Nhận
             </button>
           ) : row.shippingStatus === ShippingStatus.Shipping ? (
-            <span className="bg-green-600 text-white p-1 text-sm">Đã Xác Nhận</span>
+            <span className="text-green-600  flex items-center text-sm">Đã Xác Nhận</span>
           ) : (
             'Đơn hàng đã được giao'
           )}
@@ -189,9 +190,9 @@ const Order = () => {
   return (
     <>
       <div className="flex justify-between flex-col  mb-12 ">
-        <div className="text-2xl mt-4 mb-4 text-orange-500">Danh Sách Đơn Hàng</div>
+        <div className="text-md p-10 pl-0  text-black font-bold">DANH SÁCH ĐƠN HÀNG</div>
         <input
-          className="py-4 px-4 w-2/4 outline-none mb-12"
+          className="py-2 px-4 w-2/4 outline-none mb-12 border border-gray-500 rounded-md"
           type="text"
           placeholder="Tìm kiếm..."
           onChange={handleFilter}

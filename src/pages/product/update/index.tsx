@@ -8,8 +8,8 @@ const ProductUpdatePage = () => {
   const router = useRouter();
   return (
     <div className="mb-5">
-      <div className="p-10 pl-0 text-black font-bold flex justify-between">
-        <h1>CẬP NHẬT SẢN PHẨM AUDIO</h1>
+      <div className="p-10 pl-0 text-black flex justify-between">
+        <h1 className="font-bold">CẬP NHẬT SẢN PHẨM AUDIO</h1>
 
         <button
           className="px-4 py-2 bg-blue-500 text-[#FF0097] rounded-md hover:bg-blue-700"

@@ -8,8 +8,8 @@ const SliderUpdatePage = () => {
   const router = useRouter();
   return (
     <div className="h-screen">
-      <div className="py-10 text-black font-bold flex justify-between">
-        <h1>CẬP NHẬT SLIDER</h1>
+      <div className="py-10 text-black flex justify-between">
+        <h1 className="font-bold">CẬP NHẬT SLIDER</h1>
 
         <button
           className="px-4 py-2 bg-blue-500 text-[#FF0097] rounded-md hover:bg-blue-700"

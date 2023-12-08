@@ -1,18 +1,18 @@
-import User from '@/components/User';
+import Voucher from '@/components/Voucher';
 import useUserStore, { UserStore } from '@/store/useUserStore';
 import React from 'react';
 
-const UserPage = () => {
+const VoucherPage = () => {
   const { user } = useUserStore(store => store) as UserStore;
 
   return (
     <div className="flex flex-col min-h-screen">
       <div className="p-10 pl-0 text-black font-bold">
-        <h1>DANH SÁCH KHÁCH HÀNG</h1>
+        <h1>DANH SÁCH MÃ GIẢM GIÁ</h1>
       </div>
-      {user ? <User /> : <></>}
+      {user ? <Voucher /> : <></>}
     </div>
   );
 };
 
-export default UserPage;
+export default VoucherPage;

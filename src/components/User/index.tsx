@@ -17,13 +17,14 @@ const customStyles = {
   },
   headRow: {
     style: {
-      backgroundColor: 'black',
-      color: 'white'
+      backgroundColor: '#ccc',
+      color: 'black',
+      fontWeight: 'bold'
     }
   },
   headCells: {
     style: {
-      fontSize: '18px'
+      fontSize: '16px'
     }
   }
 };
@@ -34,16 +35,16 @@ const User = () => {
   const [prop, setProp] = useState<any>({});
   const [id, setId] = useState<any>();
   const columns = [
-    { name: 'ID', selector: (row: any) => row._id },
+    // { name: 'ID', selector: (row: any) => row._id },
 
     { name: 'Tên Người Dùng', selector: (row: any) => row.fullName, sortable: true },
     { name: 'Số Điện Thoại', selector: (row: any) => row.phoneNumber, sortable: true },
     // { name: 'Email', selector: (row: any) => row?.email, sortable: true },
-    { name: 'Nhà cung cấp', selector: (row: any) => row.provider, sortable: true },
+    { name: 'Mạng xã hội', selector: (row: any) => row.provider, sortable: true },
     {
       name: 'Giới Tính',
       selector: (row: any) => (
-        <>{row.gender === Gender.Female ? 'NỮ' : row.gender === Gender.Male ? 'NAM' : 'KHÔNG XÁC ĐỊNH'} </>
+        <>{row.gender === Gender.Female ? 'Nữ' : row.gender === Gender.Male ? 'Nam' : 'Chưa xác định'} </>
       ),
       sortable: true
     },
@@ -124,7 +125,7 @@ const User = () => {
           {' '}
           <div>
             <input
-              className="py-4 px-4 w-2/4 outline-none mb-5"
+              className="py-2 px-4 w-2/4 outline-none mb-5 border border-gray-500 rounded-md"
               type="text"
               placeholder="Tìm kiếm..."
               onChange={handleFilter}

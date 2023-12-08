@@ -78,43 +78,45 @@ const DetailOrder = ({ data }: any) => {
     setIsOpen(false);
   };
   return (
-    <>
-      <div className=" text-amber-600 font-bold flex mb-2">
-        <span className="mr-32">CHI TIẾT HOÁ ĐƠN</span>
-        {detailOrder.shippingStatus === ShippingStatus.NotShipped ? (
+    <div className="min-h-screen">
+      <div className=" text-black font-bold flex mb-2 p-10 pl-0 justify-between ">
+        <span className="">CHI TIẾT HOÁ ĐƠN</span>
+        <div className="flex">
+          {detailOrder.shippingStatus === ShippingStatus.NotShipped ? (
+            <button
+              className="text-white ml-5 bg-orange-700 p-1 text-sm rounded-md font-thin "
+              onClick={() => {
+                setIsOpen(true);
+                setProp({
+                  title: 'XÁC NHẬN',
+                  content: 'Bạn có chắc chắn xác nhận đơn hàng này?'
+                });
+                setOnOK(() => handleConfirm);
+              }}
+            >
+              Xác Nhận Đơn Hàng
+            </button>
+          ) : (
+            <span className="ml-5  text-sm text-green-600 font-thin p-1">Đã Xác Nhận</span>
+          )}
+
           <button
-            className="text-white ml-5 bg-orange-700 p-1 text-sm rounded-md font-thin "
+            className="text-white  flex items-center ml-5 bg-cyan-700  font-thin p-1 text-sm rounded-md"
             onClick={() => {
               setIsOpen(true);
               setProp({
                 title: 'XÁC NHẬN',
-                content: 'Bạn có chắc chắn xác nhận đơn hàng này?'
+                content: 'Bạn có chắc chắn in đơn hàng này?'
               });
-              setOnOK(() => handleConfirm);
+              setOnOK(() => handlePrint);
             }}
           >
-            Xác Nhận Đơn Hàng
+            <AiFillPrinter /> <span className="ml-2">In Hoá Đơn</span>
           </button>
-        ) : (
-          <span className="ml-5 text-white text-sm bg-green-600 font-thin p-1">Đã Xác Nhận</span>
-        )}
-
-        <button
-          className="text-white  flex items-center ml-5 bg-cyan-700  font-thin p-1 text-sm rounded-md"
-          onClick={() => {
-            setIsOpen(true);
-            setProp({
-              title: 'XÁC NHẬN',
-              content: 'Bạn có chắc chắn in đơn hàng này?'
-            });
-            setOnOK(() => handlePrint);
-          }}
-        >
-          <AiFillPrinter /> <span className="ml-2">In Hoá Đơn</span>
-        </button>
+        </div>
       </div>
       <div className="w-full bg-white flex p-10">
-        <div className="p-5  border-r-orange-700 border-r-2">
+        <div className="p-5  border-r-black border-r-2">
           <Image
             src={
               detailOrder.userId?.avatarId?.url
@@ -127,17 +129,17 @@ const DetailOrder = ({ data }: any) => {
             className="rounded-full mb-5"
           ></Image>
           <div className=" mb-5">
-            Họ Tên: <span className="p-2 text-yellow-700">{detailOrder.userId?.fullName || ''}</span>
+            Họ Tên: <span className="p-2 text-blue-500">{detailOrder.userId?.fullName || ''}</span>
           </div>
           <div className=" mb-5">
-            Số Điện Thoại: <span className="p-2 text-yellow-700">{detailOrder.userId?.phoneNumber || ''}</span>
+            Số Điện Thoại: <span className="p-2 text-blue-500">{detailOrder.userId?.phoneNumber || ''}</span>
           </div>
           <div className=" mb-5">
-            Địa chỉ: <span className="p-2 text-yellow-700">{detailOrder.shippingAddress || ''}</span>
+            Địa chỉ: <span className="p-2 text-blue-500">{detailOrder.shippingAddress || ''}</span>
           </div>
           <div className=" mb-5">
             Hình thức thanh toán:{' '}
-            <span className="p-2 text-yellow-700">
+            <span className="p-2 text-blue-500">
               {detailOrder.paymentMethod === PaymentMethod.Offline
                 ? 'Thanh toán khi nhận hàng'
                 : detailOrder.transaction.gateway}
@@ -151,15 +153,15 @@ const DetailOrder = ({ data }: any) => {
           </div>
           <div>
             {' '}
-            Ngày tháng: <span className="p-2 text-yellow-700"> {localDateTime}</span>
+            Ngày tháng: <span className="p-2 text-blue-500"> {localDateTime}</span>
           </div>
           <div>
             {' '}
-            Mô tả: <span className="p-2 text-yellow-700"> {detailOrder.description}</span>
+            Mô tả: <span className="p-2 text-blue-500"> {detailOrder.description}</span>
           </div>
           <div>
             {' '}
-            Tổng số tiền: <span className="p-2 text-yellow-700"> {formatCurrency(detailOrder.amount)}</span>
+            Tổng số tiền: <span className="p-2 text-blue-500"> {formatCurrency(detailOrder.amount)}</span>
           </div>
           <div> Danh sách sản phẩm:</div>
           <div>
@@ -171,7 +173,7 @@ const DetailOrder = ({ data }: any) => {
                   width={100}
                   height={100}
                 ></Image>{' '}
-                <div className="flex flex-col m-2 text-yellow-700">
+                <div className="flex flex-col m-2 text-blue-500">
                   <span>Name: {item.name}</span>
                   <span>Price: {formatCurrency(item.id.price)}</span>
                   <span>Quantity: {item.quantity}</span>
@@ -182,7 +184,7 @@ const DetailOrder = ({ data }: any) => {
         </div>
       </div>
       <ModalConfirm isOpen={isOpen} onOk={onOK} onCancel={handleClose} prop={prop} />
-    </>
+    </div>
   );
 };
 

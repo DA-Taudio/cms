@@ -1,0 +1,5 @@
+mutation deleteVoucher($input: ReadVoucherInput!) {
+  deleteVoucher(input: $input) {
+    success
+  }
+}

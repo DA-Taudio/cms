@@ -1,0 +1,5 @@
+mutation updateVoucher($input: UpdateVoucherInput!) {
+  updateVoucher(input: $input) {
+    success
+  }
+}

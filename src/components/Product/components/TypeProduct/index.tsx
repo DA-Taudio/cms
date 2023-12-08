@@ -35,8 +35,8 @@ const ProductType = () => {
       <table className="table-auto w-full">
         <thead>
           <tr>
-            <th className="px-4 py-2 bg-black text-white">Danh Sách Loại Sản Phẩm</th>
-            <th className="px-4 py-2 bg-black  text-white">Xoá</th>
+            <th className="px-4 py-2 bg-gray-500 text-white">Danh Sách Loại Sản Phẩm</th>
+            <th className="px-4 py-2 bg-gray-500  text-white">Xoá</th>
           </tr>
         </thead>
         <tbody>
