@@ -56,7 +56,6 @@ export const FormVoucher: React.FC<FormVoucherProps> = ({ onOk, onCancel, initia
       endTime: new Date(timeRange[1]).toISOString()
     });
     form.resetFields();
-
     onOk();
   };
 
@@ -69,15 +68,27 @@ export const FormVoucher: React.FC<FormVoucherProps> = ({ onOk, onCancel, initia
     return name.toLowerCase().includes(input.toLowerCase());
   };
 
+  const tagRender = (props: any) => {
+    const { label, value, closable, onClose } = props;
+    return (
+      <div className="ant-select-tag text-xs flex">
+        {label}
+        {closable && (
+          <span onClick={onClose} className="ant-select-tag-close-icon text-xl text-blue-500 hover:cursor-pointer">
+            ×
+          </span>
+        )}
+      </div>
+    );
+  };
+
   return (
     <>
       <Form
+        form={form}
         initialValues={{
           ...initialValues,
-          timeRange: [
-            moment(initialValues?.startTime, 'YYYY-MM-DD HH:mm'),
-            moment(initialValues?.endTime, 'YYYY-MM-DD HH:mm')
-          ]
+          ...(initialValues && { timeRange: [moment(initialValues?.startTime), moment(initialValues?.endTime)] })
         }}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 14 }}
@@ -134,7 +145,7 @@ export const FormVoucher: React.FC<FormVoucherProps> = ({ onOk, onCancel, initia
           name="productIds"
           rules={[{ required: true, message: 'Vui lòng chọn ít nhất một sản phẩm' }]}
         >
-          <Select mode="multiple" placeholder="Chọn sản phẩm..." filterOption={filterOption}>
+          <Select mode="multiple" placeholder="Chọn sản phẩm..." filterOption={filterOption} tagRender={tagRender}>
             {listProduct?.products?.map(item => (
               <Option value={item._id}>
                 <div className="flex items-center">

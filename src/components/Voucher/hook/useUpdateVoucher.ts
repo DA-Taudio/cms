@@ -8,7 +8,7 @@ const useUpdateVoucher = () => {
   const { mutate: updateVoucher, isLoading: UpdateVoucherLoading } = useUpdateVoucherMutation(graphqlClientRequest(), {
     onSuccess: data => {
       if (data.updateVoucher.success) {
-        Notification.Success('Cập nhật trình chiếu thành công!');
+        Notification.Success('Cập nhật mã giảm giá thành công!');
       }
     },
     onError: error => {
