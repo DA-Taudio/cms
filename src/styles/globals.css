@@ -21,6 +21,11 @@ body {
   font-family: 'Roboto', sans-serif;
   background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
+.ant-popconfirm-buttons .ant-btn,
+.ant-picker-ok .ant-btn,
+.ant-modal-footer .ant-btn {
+  color: #020202;
+}
 .container-404 {
   position: fixed;
   top: 0;

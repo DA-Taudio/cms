@@ -1062,11 +1062,13 @@ export type VoucherResponse = {
   __typename?: 'VoucherResponse';
   _id: Scalars['String'];
   code: Scalars['String'];
+  countHistory?: Maybe<Scalars['Float']>;
   endTime: Scalars['Float'];
   maxDiscount: Scalars['Float'];
   maxUserUse: Scalars['Float'];
   percent: Scalars['Float'];
   productIds: Array<Scalars['String']>;
+  products?: Maybe<Array<ProductPayload>>;
   quantity: Scalars['Float'];
   startTime: Scalars['Float'];
 };
@@ -1272,7 +1274,7 @@ export type ListVoucherQueryVariables = Exact<{
 }>;
 
 
-export type ListVoucherQuery = { __typename?: 'Query', listVoucher: { __typename?: 'ListVoucherResponse', vouchers?: Array<{ __typename?: 'VoucherResponse', _id: string, code: string, percent: number, maxDiscount: number, quantity: number, maxUserUse: number, productIds: Array<string>, startTime: number, endTime: number }> | null } };
+export type ListVoucherQuery = { __typename?: 'Query', listVoucher: { __typename?: 'ListVoucherResponse', vouchers?: Array<{ __typename?: 'VoucherResponse', _id: string, code: string, percent: number, maxDiscount: number, quantity: number, maxUserUse: number, productIds: Array<string>, startTime: number, endTime: number, countHistory?: number | null, products?: Array<{ __typename?: 'ProductPayload', _id?: string | null, name?: string | null, price?: number | null, countInStock?: number | null, totalSold?: number | null, image?: { __typename?: 'Media', url?: string | null } | null }> | null }> | null } };
 
 export type UpdateVoucherMutationVariables = Exact<{
   input: UpdateVoucherInput;
@@ -2072,6 +2074,17 @@ export const ListVoucherDocument = `
       productIds
       startTime
       endTime
+      countHistory
+      products {
+        _id
+        name
+        price
+        countInStock
+        totalSold
+        image {
+          url
+        }
+      }
     }
   }
 }
