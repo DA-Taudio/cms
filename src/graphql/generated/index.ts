@@ -181,20 +181,13 @@ export type CreatePaymentResponse = {
 };
 
 export type CreateProductInputDto = {
-  compatibility?: InputMaybe<Scalars['String']>;
-  connectivity?: InputMaybe<Scalars['String']>;
   countInStock: Scalars['Float'];
   description: Scalars['String'];
-  dimensions?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<Scalars['String']>;
-  manufacturer?: InputMaybe<Scalars['String']>;
-  modelNumber?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
-  powerSource?: InputMaybe<Scalars['String']>;
   price: Scalars['Float'];
+  specification?: InputMaybe<Scalars['String']>;
   type: Scalars['String'];
-  warranty?: InputMaybe<Scalars['String']>;
-  weight?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateSliderInput = {
@@ -739,45 +732,30 @@ export type PrintOrderType = {
 };
 
 export type ProductInputDto = {
-  compatibility?: InputMaybe<Scalars['String']>;
-  connectivity?: InputMaybe<Scalars['String']>;
   countInStock: Scalars['Float'];
   description: Scalars['String'];
-  dimensions?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<Scalars['String']>;
-  manufacturer?: InputMaybe<Scalars['String']>;
-  modelNumber?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
-  powerSource?: InputMaybe<Scalars['String']>;
   price: Scalars['Float'];
+  specification?: InputMaybe<Scalars['String']>;
   type: Scalars['String'];
-  warranty?: InputMaybe<Scalars['String']>;
-  weight?: InputMaybe<Scalars['String']>;
 };
 
 export type ProductPayload = {
   __typename?: 'ProductPayload';
   _id?: Maybe<Scalars['String']>;
-  compatibility?: Maybe<Scalars['String']>;
-  connectivity?: Maybe<Scalars['String']>;
   countInStock?: Maybe<Scalars['Float']>;
   createdAt?: Maybe<Scalars['Float']>;
   description?: Maybe<Scalars['String']>;
-  dimensions?: Maybe<Scalars['String']>;
   image?: Maybe<Media>;
-  manufacturer?: Maybe<Scalars['String']>;
-  modelNumber?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  powerSource?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
+  specification?: Maybe<Scalars['String']>;
   totalComment?: Maybe<Scalars['Float']>;
   totalLike?: Maybe<Scalars['Float']>;
   totalSold?: Maybe<Scalars['Float']>;
   type?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['Float']>;
-  video?: Maybe<Scalars['String']>;
-  warranty?: Maybe<Scalars['String']>;
-  weight?: Maybe<Scalars['String']>;
 };
 
 export type ProductType = {
@@ -1187,7 +1165,7 @@ export type GetProductQueryVariables = Exact<{
 }>;
 
 
-export type GetProductQuery = { __typename?: 'Query', getProduct: { __typename?: 'GetProductResponse', product?: { __typename?: 'ProductPayload', _id?: string | null, name?: string | null, description?: string | null, price?: number | null, countInStock?: number | null, manufacturer?: string | null, modelNumber?: string | null, dimensions?: string | null, weight?: string | null, connectivity?: string | null, powerSource?: string | null, compatibility?: string | null, warranty?: string | null, totalLike?: number | null, totalComment?: number | null, type?: string | null, totalSold?: number | null, image?: { __typename?: 'Media', url?: string | null, _id?: string | null } | null } | null } };
+export type GetProductQuery = { __typename?: 'Query', getProduct: { __typename?: 'GetProductResponse', product?: { __typename?: 'ProductPayload', _id?: string | null, name?: string | null, description?: string | null, price?: number | null, countInStock?: number | null, specification?: string | null, totalLike?: number | null, totalComment?: number | null, type?: string | null, totalSold?: number | null, image?: { __typename?: 'Media', url?: string | null, _id?: string | null } | null } | null } };
 
 export type ListTypeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1742,14 +1720,7 @@ export const GetProductDocument = `
         url
         _id
       }
-      manufacturer
-      modelNumber
-      dimensions
-      weight
-      connectivity
-      powerSource
-      compatibility
-      warranty
+      specification
       totalLike
       totalComment
       type

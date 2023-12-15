@@ -47,14 +47,7 @@ const UpdateProduct = () => {
     description: result.product?.description,
     price: result.product?.price,
     countInStock: result.product?.countInStock,
-    manufacturer: result.product?.manufacturer,
-    modelNumber: result.product?.modelNumber,
-    dimensions: result.product?.dimensions,
-    weight: result.product?.weight,
-    connectivity: result.product?.connectivity,
-    powerSource: result.product?.powerSource,
-    compatibility: result.product?.compatibility,
-    warranty: result.product?.warranty
+    specification: result.product?.specification
   };
 
   const handleImageIdChange = (url: string) => {
@@ -177,111 +170,21 @@ const UpdateProduct = () => {
                 </label>
                 <ImageUploader onImageIdChange={handleImageIdChange} imageUrl={imageUrl} setImageUrl={setImageUrl} />
               </div>
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="manufacturer" className="block text-md font-medium text-black">
-                  Thương Hiệu:
+              <div className="mb-3 w-full p-5">
+                <label htmlFor="specification" className="block text-md font-medium text-black">
+                  Thông số kỹ thuật:
                 </label>
+
                 <Field
-                  type="text"
-                  id="manufacturer"
-                  name="manufacturer"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
+                  as="textarea"
+                  id="specification"
+                  name="specification"
+                  className="mt-1 h-52 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
                 />
-                <ErrorMessage name="manufacturer" component="div" className="text-red-500 text-sm" />
+                <ErrorMessage name="specification" component="div" className="text-red-500 text-sm" />
               </div>
 
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="modelNumber" className="block text-md font-medium text-black">
-                  Mã số mô hình:
-                </label>
-                <Field
-                  type="text"
-                  id="modelNumber"
-                  name="modelNumber"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="modelNumber" component="div" className="text-red-500 text-sm" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="dimensions" className="block text-md font-medium text-black">
-                  Kích thước:
-                </label>
-                <Field
-                  type="text"
-                  id="dimensions"
-                  name="dimensions"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="dimensions" component="div" className="text-red-500 text-sm" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="weight" className="block text-md font-medium text-black">
-                  Trọng lượng:
-                </label>
-                <Field
-                  type="text"
-                  id="weight"
-                  name="weight"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="weight" component="div" className="text-red-500 text-sm" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="connectivity" className="block text-md font-medium text-black">
-                  Kết nối:
-                </label>
-                <Field
-                  type="text"
-                  id="connectivity"
-                  name="connectivity"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="connectivity" component="div" className="text-red-500 text-sm" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="powerSource" className="block text-md font-medium text-black">
-                  Nguồn điện:
-                </label>
-                <Field
-                  type="text"
-                  id="powerSource"
-                  name="powerSource"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="powerSource" component="div" className="text-red-500 text-sm" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="compatibility" className="block text-md font-medium text-black">
-                  Khả năng tương thích:
-                </label>
-                <Field
-                  type="text"
-                  id="compatibility"
-                  name="compatibility"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="compatibility" component="div" className="text-red-500 text-sm" />
-              </div>
-
-              <div className="mb-4 w-4/12 p-5">
-                <label htmlFor="warranty" className="block text-md font-medium text-black">
-                  Bảo hành:
-                </label>
-                <Field
-                  type="text"
-                  id="warranty"
-                  name="warranty"
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 border rounded-md p-3 bg-white"
-                />
-                <ErrorMessage name="warranty" component="div" className="text-red-500 text-sm" />
-              </div>
-
-              <div className="w-4/12 p-10 flex justify-end">
+              <div className="w-full p-10 flex justify-end">
                 <button
                   type="submit"
                   className="px-4 py-2 bg-blue-500 text-[#FF0097] rounded-md hover:bg-blue-700"

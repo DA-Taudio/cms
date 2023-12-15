@@ -10,14 +10,7 @@ query getProduct($input: ReadProductInputDto!) {
         url
         _id
       }
-      manufacturer
-      modelNumber
-      dimensions
-      weight
-      connectivity
-      powerSource
-      compatibility
-      warranty
+      specification
       totalLike
       totalComment
       type
