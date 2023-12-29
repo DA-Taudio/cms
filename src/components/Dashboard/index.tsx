@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Card, Skeleton, DatePicker, Button, Space } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { ContainerOutlined, DropboxOutlined, MoneyCollectOutlined, TeamOutlined } from '@ant-design/icons';
+import useAnalytic from './hook/useAnalytic';
+import { formatCurrency } from '@/utils/format-currency';
 
 const Dashboard: React.FC = () => {
-  const [loadingProducts, setLoadingProducts] = useState(true);
-  const [loadingUsers, setLoadingUsers] = useState(true);
-  const [loadingRevenue, setLoadingRevenue] = useState(true);
-  const [loadingOrders, setLoadingOrders] = useState(true);
-  const [dateRange, setDateRange] = useState<any>([]);
   const { RangePicker } = DatePicker;
+  const today = dayjs();
+  const [dateRange, setDateRange] = useState<any>([today.startOf('day'), today.endOf('day')]);
   const [combinedData, setCombinedData] = useState<any>([]);
+  const { result, isLoading } = useAnalytic({
+    startTime: dateRange[0],
+    endTime: dateRange[1]
+  });
 
   useEffect(() => {
     // Simulated data containing both revenue and orders information
@@ -34,24 +38,6 @@ const Dashboard: React.FC = () => {
       }))
     );
   }, []);
-  // Simulate data loading (you can replace this with actual data fetching logic)
-  useEffect(() => {
-    setTimeout(() => {
-      setLoadingProducts(false);
-    }, 2000);
-
-    setTimeout(() => {
-      setLoadingUsers(false);
-    }, 1500);
-
-    setTimeout(() => {
-      setLoadingRevenue(false);
-    }, 1800);
-
-    setTimeout(() => {
-      setLoadingOrders(false);
-    }, 2200);
-  }, []);
 
   // Handle date range change
   const handleDateRangeChange = (dates: any) => {
@@ -63,8 +49,10 @@ const Dashboard: React.FC = () => {
   const handleQuickDateRange = (type: string) => {
     const today = dayjs();
     let start, end;
-
-    if (type === 'thisWeek') {
+    if (type == 'today') {
+      start = today.startOf('day');
+      end = today.endOf('day');
+    } else if (type === 'thisWeek') {
       start = today.startOf('week');
       end = today.endOf('week');
     } else if (type === 'thisMonth') {
@@ -81,10 +69,19 @@ const Dashboard: React.FC = () => {
 
   // Render footer with custom buttons
   const renderExtraFooter = () => (
-    <div>
-      <Button onClick={() => handleQuickDateRange('thisWeek')}>Tuần này</Button>
-      <Button onClick={() => handleQuickDateRange('thisMonth')}>Tháng này</Button>
-      <Button onClick={() => handleQuickDateRange('thisYear')}>Năm nay</Button>
+    <div className="my-2 flex justify-around">
+      <Button className=" font-bold text-md" onClick={() => handleQuickDateRange('today')}>
+        Hôm Nay
+      </Button>
+      <Button className=" font-bold text-md" onClick={() => handleQuickDateRange('thisWeek')}>
+        Tuần này
+      </Button>
+      <Button className=" font-bold text-md" onClick={() => handleQuickDateRange('thisMonth')}>
+        Tháng này
+      </Button>
+      <Button className=" font-bold text-md" onClick={() => handleQuickDateRange('thisYear')}>
+        Năm nay
+      </Button>
     </div>
   );
 
@@ -94,61 +91,86 @@ const Dashboard: React.FC = () => {
         {' '}
         <div className="w-1/4">
           <div className="bg-white p-4 rounded-md shadow-md">
-            <h2 className="text-lg font-semibold mb-4">Tổng sản phẩm</h2>
-            <div className={` ${loadingProducts ? 'animate-pulse' : ''}`}>
-              {loadingProducts ? <div className="h-4 bg-gray-300 rounded mb-2"></div> : <p>Số lượng: 1000</p>}
+            <h2 className="text-md justify-center mb-4 flex items-center">
+              <DropboxOutlined className="text-pink-500 mr-2 text-3xl" />
+              Sản phẩm
+            </h2>
+            <div className={` ${isLoading ? 'animate-pulse' : ''}`}>
+              {isLoading ? (
+                <div className="h-4 bg-gray-300 rounded mb-2"></div>
+              ) : (
+                <p className="font-bold text-pink-500 text-2xl text-center">{result?.product || 0}</p>
+              )}
             </div>
           </div>
         </div>
         <div className="w-1/4">
           <div className="bg-white p-4 rounded-md shadow-md">
-            <h2 className="text-lg font-semibold mb-4">Tổng người dùng</h2>
-            <div className={` ${loadingUsers ? 'animate-pulse' : ''}`}>
-              {loadingUsers ? <div className="h-4 bg-gray-300 rounded mb-2"></div> : <p>Số lượng: 5000</p>}
+            <h2 className="text-md justify-center mb-4 flex items-center">
+              <TeamOutlined className="text-pink-500 mr-2 text-3xl" />
+              Người Dùng
+            </h2>
+            <div className={` ${isLoading ? 'animate-pulse' : ''}`}>
+              {isLoading ? (
+                <div className="h-4 bg-gray-300 rounded mb-2"></div>
+              ) : (
+                <p className="font-bold text-pink-500 text-2xl text-center">{result?.user || 0}</p>
+              )}
             </div>
           </div>
         </div>
         <div className="w-1/4">
           <div className="bg-white p-4 rounded-md shadow-md">
-            <h2 className="text-lg font-semibold mb-4">Tổng doanh thu</h2>
-            <div className={` ${loadingRevenue ? 'animate-pulse' : ''}`}>
-              {loadingRevenue ? <div className="h-4 bg-gray-300 rounded mb-2"></div> : <p>Doanh thu: $100,000</p>}
+            <h2 className="text-md justify-center mb-4 flex items-center">
+              <MoneyCollectOutlined className="text-pink-500 mr-2 text-3xl" />
+              Doanh Thu
+            </h2>
+            <div className={` ${isLoading ? 'animate-pulse' : ''}`}>
+              {isLoading ? (
+                <div className="h-4 bg-gray-300 rounded mb-2"></div>
+              ) : (
+                <p className="font-bold text-pink-500 text-2xl text-center">{formatCurrency(result?.revenue || 0)}</p>
+              )}
             </div>
           </div>
         </div>
         <div className="w-1/4">
           <div className="bg-white p-4 rounded-md shadow-md">
-            <h2 className="text-lg font-semibold mb-4">Tổng đơn hàng</h2>
-            <div className={` ${loadingOrders ? 'animate-pulse' : ''}`}>
-              {loadingOrders ? <div className="h-4 bg-gray-300 rounded mb-2"></div> : <p>Số lượng: 50</p>}
+            <h2 className="text-md justify-center mb-4 flex items-center">
+              <ContainerOutlined className="text-pink-500 mr-2 text-3xl" />
+              Đơn Hàng
+            </h2>
+            <div className={` ${isLoading ? 'animate-pulse' : ''}`}>
+              {isLoading ? (
+                <div className="h-4 bg-gray-300 rounded mb-2"></div>
+              ) : (
+                <p className="font-bold text-pink-500 text-2xl text-center">{result?.order || 0}</p>
+              )}
             </div>
           </div>
         </div>
       </div>
-      <Space direction="vertical" size={12} className="mb-4 px-4">
-        <RangePicker
-          value={dateRange}
-          onChange={handleDateRangeChange}
-          renderExtraFooter={renderExtraFooter}
-          // ranges={{
-          //   'Tuần này': [dayjs(), dayjs()],
-          //   'Tháng này': [dayjs(), dayjs()],
-          //   'Năm nay': [dayjs(), dayjs()]
-          // }}
-        />
-      </Space>
 
       <div className="p-4">
         <div className="bg-white p-4 rounded-md shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Biểu đồ Doanh thu và Số đơn hàng</h2>
-          <LineChart width={400} height={300} margin={{ top: 5, right: 20, left: 10, bottom: 5 }} data={combinedData}>
+          <Space direction="vertical" size={12} className="mb-4 ">
+            <RangePicker
+              value={dateRange}
+              onChange={handleDateRangeChange}
+              showTime={{ format: 'HH:mm' }}
+              format="YYYY-MM-DD HH:mm"
+              renderExtraFooter={renderExtraFooter}
+            />
+          </Space>
+          <h2 className="text-lg font-semibold mb-4">Biểu đồ Doanh thu và Đơn hàng</h2>
+          <LineChart width={1000} height={500} margin={{ top: 5, right: 20, left: 10, bottom: 5 }} data={combinedData}>
             <XAxis dataKey="date" />
             <YAxis />
             <CartesianGrid stroke="#f5f5f5" />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="value" name="Doanh thu" stroke="#8884d8" />
-            <Line type="monotone" dataKey="value" name="Số đơn hàng" stroke="#82ca9d" />
+            <Line type="monotone" dataKey="revenue" name="Doanh thu" stroke="#FF0097" />
+            <Line type="monotone" dataKey="order" name="Đơn hàng" stroke="#0F764A" />
           </LineChart>
         </div>
       </div>

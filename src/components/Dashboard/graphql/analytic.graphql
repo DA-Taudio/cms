@@ -1,0 +1,13 @@
+query analytic($input: AnalyticInput!) {
+  analytic(input: $input) {
+    product
+    revenue
+    user
+    order
+    detail {
+      revenue
+      order
+      date
+    }
+  }
+}

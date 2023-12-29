@@ -51,6 +51,20 @@ export type AdminPayload = {
   userName?: Maybe<Scalars['String']>;
 };
 
+export type AnalyticInput = {
+  endTime: Scalars['String'];
+  startTime: Scalars['String'];
+};
+
+export type AnalyticType = {
+  __typename?: 'AnalyticType';
+  detail?: Maybe<DetailAnalytic>;
+  order?: Maybe<Scalars['Float']>;
+  product?: Maybe<Scalars['Float']>;
+  revenue?: Maybe<Scalars['Float']>;
+  user?: Maybe<Scalars['Float']>;
+};
+
 export type ApplyVouchersInput = {
   couponCode: Array<Scalars['String']>;
   items?: InputMaybe<Array<OrderItem>>;
@@ -164,7 +178,7 @@ export type CreateConversationType = {
 };
 
 export type CreatePaymentInputDto = {
-  code: Scalars['String'];
+  code: Array<Scalars['String']>;
   couponCode?: InputMaybe<Array<Scalars['String']>>;
   description?: InputMaybe<Scalars['String']>;
   items: Array<OrderItem>;
@@ -216,6 +230,13 @@ export type DeleteTypeInput = {
   typeId: Scalars['String'];
 };
 
+export type DetailAnalytic = {
+  __typename?: 'DetailAnalytic';
+  date?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['Float']>;
+  revenue?: Maybe<Scalars['Float']>;
+};
+
 export type FavoriteProductInput = {
   productId: Scalars['String'];
 };
@@ -231,6 +252,7 @@ export type FilterSliderInput = {
 };
 
 export type FilterVoucherInput = {
+  productIds?: InputMaybe<Array<Scalars['String']>>;
   status_eq?: InputMaybe<VoucherStatus>;
 };
 
@@ -776,6 +798,7 @@ export enum Provider {
 
 export type Query = {
   __typename?: 'Query';
+  analytic: AnalyticType;
   detailOrder: OrderDto;
   getAdmin: AdminPayload;
   getIdAdmin: GetIdAdminResponse;
@@ -796,6 +819,11 @@ export type Query = {
   listType: GetListTypeResponse;
   listUser: ListUserResponse;
   listVoucher: ListVoucherResponse;
+};
+
+
+export type QueryAnalyticArgs = {
+  input: AnalyticInput;
 };
 
 
@@ -1046,7 +1074,7 @@ export type VoucherResponse = {
   maxUserUse: Scalars['Float'];
   percent: Scalars['Float'];
   productIds: Array<Scalars['String']>;
-  products?: Maybe<Array<ProductPayload>>;
+  products?: Maybe<Array<Maybe<ProductPayload>>>;
   quantity: Scalars['Float'];
   startTime: Scalars['Float'];
 };
@@ -1063,6 +1091,13 @@ export type AdminLoginMutationVariables = Exact<{
 
 
 export type AdminLoginMutation = { __typename?: 'Mutation', adminLogin: { __typename?: 'AdminLoginResponse', token: string, refreshToken: string, expiresAt: string, payload: { __typename?: 'AdminPayload', _id?: string | null, fullName?: string | null, userName?: string | null } } };
+
+export type AnalyticQueryVariables = Exact<{
+  input: AnalyticInput;
+}>;
+
+
+export type AnalyticQuery = { __typename?: 'Query', analytic: { __typename?: 'AnalyticType', product?: number | null, revenue?: number | null, user?: number | null, order?: number | null, detail?: { __typename?: 'DetailAnalytic', revenue?: number | null, order?: number | null, date?: string | null } | null } };
 
 export type ListConversationQueryVariables = Exact<{
   input: ListConversationInput;
@@ -1252,7 +1287,7 @@ export type ListVoucherQueryVariables = Exact<{
 }>;
 
 
-export type ListVoucherQuery = { __typename?: 'Query', listVoucher: { __typename?: 'ListVoucherResponse', vouchers?: Array<{ __typename?: 'VoucherResponse', _id: string, code: string, percent: number, maxDiscount: number, quantity: number, maxUserUse: number, productIds: Array<string>, startTime: number, endTime: number, countHistory?: number | null, products?: Array<{ __typename?: 'ProductPayload', _id?: string | null, name?: string | null, price?: number | null, countInStock?: number | null, totalSold?: number | null, image?: { __typename?: 'Media', url?: string | null } | null }> | null }> | null } };
+export type ListVoucherQuery = { __typename?: 'Query', listVoucher: { __typename?: 'ListVoucherResponse', vouchers?: Array<{ __typename?: 'VoucherResponse', _id: string, code: string, percent: number, maxDiscount: number, quantity: number, maxUserUse: number, productIds: Array<string>, startTime: number, endTime: number, countHistory?: number | null, products?: Array<{ __typename?: 'ProductPayload', _id?: string | null, name?: string | null, price?: number | null, countInStock?: number | null, totalSold?: number | null, image?: { __typename?: 'Media', url?: string | null } | null } | null> | null }> | null } };
 
 export type UpdateVoucherMutationVariables = Exact<{
   input: UpdateVoucherInput;
@@ -1292,6 +1327,35 @@ export const useAdminLoginMutation = <
     useMutation<AdminLoginMutation, TError, AdminLoginMutationVariables, TContext>(
       ['adminLogin'],
       (variables?: AdminLoginMutationVariables) => fetcher<AdminLoginMutation, AdminLoginMutationVariables>(client, AdminLoginDocument, variables, headers)(),
+      options
+    );
+export const AnalyticDocument = `
+    query analytic($input: AnalyticInput!) {
+  analytic(input: $input) {
+    product
+    revenue
+    user
+    order
+    detail {
+      revenue
+      order
+      date
+    }
+  }
+}
+    `;
+export const useAnalyticQuery = <
+      TData = AnalyticQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: AnalyticQueryVariables,
+      options?: UseQueryOptions<AnalyticQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<AnalyticQuery, TError, TData>(
+      ['analytic', variables],
+      fetcher<AnalyticQuery, AnalyticQueryVariables>(client, AnalyticDocument, variables, headers),
       options
     );
 export const ListConversationDocument = `
