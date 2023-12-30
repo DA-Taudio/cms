@@ -19,7 +19,7 @@ const Dashboard: React.FC = () => {
   // Handle date range change
   const handleDateRangeChange = (dates: any) => {
     // Convert Date objects to Dayjs
-    setDateRange(dates.map((date: Date) => dayjs(date)));
+    setDateRange(dates?.map((date: Date) => dayjs(date)));
   };
 
   // Handle "Tuần này", "Tháng này", "Năm nay" button click
@@ -141,7 +141,7 @@ const Dashboard: React.FC = () => {
           </Space>
           <h2 className="text-lg font-semibold mb-4">Biểu đồ Doanh thu và Đơn hàng</h2>
           <LineChart
-            width={1000}
+            width={1300}
             height={500}
             margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
             data={result?.detail || []}
