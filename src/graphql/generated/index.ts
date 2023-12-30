@@ -58,7 +58,7 @@ export type AnalyticInput = {
 
 export type AnalyticType = {
   __typename?: 'AnalyticType';
-  detail?: Maybe<DetailAnalytic>;
+  detail?: Maybe<Array<DetailAnalytic>>;
   order?: Maybe<Scalars['Float']>;
   product?: Maybe<Scalars['Float']>;
   revenue?: Maybe<Scalars['Float']>;
@@ -798,7 +798,7 @@ export enum Provider {
 
 export type Query = {
   __typename?: 'Query';
-  analytic: AnalyticType;
+  analytic?: Maybe<AnalyticType>;
   detailOrder: OrderDto;
   getAdmin: AdminPayload;
   getIdAdmin: GetIdAdminResponse;
@@ -1097,7 +1097,7 @@ export type AnalyticQueryVariables = Exact<{
 }>;
 
 
-export type AnalyticQuery = { __typename?: 'Query', analytic: { __typename?: 'AnalyticType', product?: number | null, revenue?: number | null, user?: number | null, order?: number | null, detail?: { __typename?: 'DetailAnalytic', revenue?: number | null, order?: number | null, date?: string | null } | null } };
+export type AnalyticQuery = { __typename?: 'Query', analytic?: { __typename?: 'AnalyticType', product?: number | null, revenue?: number | null, user?: number | null, order?: number | null, detail?: Array<{ __typename?: 'DetailAnalytic', revenue?: number | null, order?: number | null, date?: string | null }> | null } | null };
 
 export type ListConversationQueryVariables = Exact<{
   input: ListConversationInput;

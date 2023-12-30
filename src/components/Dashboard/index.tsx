@@ -9,35 +9,12 @@ import { formatCurrency } from '@/utils/format-currency';
 const Dashboard: React.FC = () => {
   const { RangePicker } = DatePicker;
   const today = dayjs();
-  const [dateRange, setDateRange] = useState<any>([today.startOf('day'), today.endOf('day')]);
+  const [dateRange, setDateRange] = useState<any>([today.startOf('month'), today.endOf('month')]);
   const [combinedData, setCombinedData] = useState<any>([]);
   const { result, isLoading } = useAnalytic({
     startTime: dateRange[0],
     endTime: dateRange[1]
   });
-
-  useEffect(() => {
-    // Simulated data containing both revenue and orders information
-    const simulatedData = [
-      { date: dayjs('2023-12-01').format('YYYY-MM-DD'), revenue: 1000, orders: 5 },
-      { date: dayjs('2023-12-02').format('YYYY-MM-DD'), revenue: 1500, orders: 8 },
-      { date: dayjs('2023-12-03').format('YYYY-MM-DD'), revenue: 2000, orders: 10 },
-      { date: dayjs('2023-12-04').format('YYYY-MM-DD'), revenue: 1200, orders: 6 },
-      { date: dayjs('2023-12-05').format('YYYY-MM-DD'), revenue: 1800, orders: 9 },
-      { date: dayjs('2023-12-06').format('YYYY-MM-DD'), revenue: 2500, orders: 12 },
-      { date: dayjs('2023-12-07').format('YYYY-MM-DD'), revenue: 3000, orders: 15 }
-      // Add more data points as needed
-    ];
-
-    // Set data for combined chart
-    setCombinedData(
-      simulatedData.map(item => ({
-        date: item.date,
-        revenue: item.revenue,
-        orders: item.orders
-      }))
-    );
-  }, []);
 
   // Handle date range change
   const handleDateRangeChange = (dates: any) => {
@@ -163,7 +140,12 @@ const Dashboard: React.FC = () => {
             />
           </Space>
           <h2 className="text-lg font-semibold mb-4">Biểu đồ Doanh thu và Đơn hàng</h2>
-          <LineChart width={1000} height={500} margin={{ top: 5, right: 20, left: 10, bottom: 5 }} data={combinedData}>
+          <LineChart
+            width={1000}
+            height={500}
+            margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+            data={result?.detail || []}
+          >
             <XAxis dataKey="date" />
             <YAxis />
             <CartesianGrid stroke="#f5f5f5" />
