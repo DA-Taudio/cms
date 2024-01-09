@@ -171,15 +171,18 @@ const DetailProduct = ({ data }: any) => {
             Tên Sản Phẩm: <span className="text-yellow-700 ">{detailProduct.name}</span>
           </div>
           <div className="mb-5">
-            Mô Tả: <span className="text-yellow-700">{detailProduct.description}</span>
+            Mô Tả: <pre className="text-yellow-700">{detailProduct.description}</pre>
           </div>
-          <div className="mb-5">
+          {/* <div className="mb-5">
             Thương Hiệu: <span className="text-yellow-700">{detailProduct.manufacturer}</span>
-          </div>
+          </div> */}
           <div className="mb-5">
             Phân Loại: <span className="text-yellow-700">{detailProduct.type}</span>
           </div>
           <div className="mb-5">
+            Thông số kỹ thuật: <pre className="text-yellow-700">{detailProduct.specification}</pre>
+          </div>
+          {/* <div className="mb-5">
             Mã Số: <span className="text-yellow-700">{detailProduct.modelNumber}</span>
           </div>
           <div className="mb-5">
@@ -199,7 +202,7 @@ const DetailProduct = ({ data }: any) => {
           </div>
           <div className="mb-5">
             Bảo Hành: <span className="text-yellow-700">{detailProduct.warranty}</span>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col w-2/4 md:max-lg:w-full border-2 border-red-950 p-5">
           <div className=" text-amber-600 font-bold flex mb-2">BÌNH LUẬN CỦA NGƯỜI DÙNG</div>
