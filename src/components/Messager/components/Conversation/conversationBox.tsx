@@ -30,8 +30,7 @@ const ConversationBox = ({ props }: any) => {
   }, [listMessage]);
 
   useEffect(() => {
-    console.log('aaa');
-    const newSocket = io('http://localhost:8000');
+    const newSocket = io('https://be.tqtien.id.vn');
     newSocket.on('connect', () => {
       console.log('Connected to server', props._id);
 
