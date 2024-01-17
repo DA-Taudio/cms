@@ -44,6 +44,8 @@ const Order = () => {
   const [id, setId] = useState<any>();
   const [onOK, setOnOK] = useState<any>();
 
+  const image = '/images/placeholder.jpg';
+
   const columns: any[] = [
     {
       name: 'Mã Đơn Hàng',
@@ -51,12 +53,19 @@ const Order = () => {
     },
     {
       name: 'Khách Hàng',
-      selector: (row: any) => (
-        <div className="flex items-center">
-          <Avatar props={{ image: process.env.NEXT_PUBLIC_MEDIA_ENDPOINT + row?.userId?.avatarId?.url }} />
-          <span className="ml-1">{row.userId.fullName}</span>
-        </div>
-      )
+      selector: (row: any) => {
+        let image = '/images/placeholder.jpg';
+
+        if (row?.userId?.avatarId?.url) {
+          image = process.env.NEXT_PUBLIC_MEDIA_ENDPOINT + row?.userId?.avatarId?.url;
+        }
+        return (
+          <div className="flex items-center">
+            <Avatar props={{ image: image }} />
+            <span className="ml-1">{row.userId.fullName}</span>
+          </div>
+        );
+      }
     },
     {
       name: 'Ngày Mua',
