@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next lint && next dev -p 5005",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 5005",
     "lint": "next lint",
     "gen:types": "graphql-codegen --config codegen.yml && npm run gen:types:fix:error",
     "gen:types:fix:error": "node src/graphql/fix_graphql_error/replace.generate.js"
