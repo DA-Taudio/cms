@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { graphqlClientRequest } from '@/graphql/services/graphql-client';
 import { DetailOrderDocument, ListOrderAdminDocument, PaymentMethod, ShippingStatus } from '@/graphql/generated';
 import { da } from 'date-fns/locale';
@@ -55,11 +55,21 @@ const DetailOrder = ({ data }: any) => {
   const { handlePrintOrder } = usePrintOrder();
   const { handleConfirmOrder, confirmOrderLoading } = useConfirmOrder();
   const router = useRouter();
-  const detailOrder = data.detailOrder;
+  const detailOrder = data?.detailOrder;
+
+  useEffect(() => {
+    if (!data || !data?.detailOrder) {
+      router.push('/404');
+    }
+  }, [data, router]);
 
   const [isOpen, setIsOpen] = useState<any>(false);
   const [prop, setProp] = useState<any>({});
   const [onOK, setOnOK] = useState<any>();
+
+  if (!detailOrder) {
+    return <div>Loading...</div>;
+  }
 
   const createdAt = new Date(detailOrder.createdAt);
   const options = { timeZone: 'UTC' };
