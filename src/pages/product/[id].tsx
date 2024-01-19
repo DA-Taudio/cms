@@ -171,7 +171,7 @@ const DetailProduct = ({ data }: any) => {
             Tên Sản Phẩm: <span className="text-yellow-700 ">{detailProduct.name}</span>
           </div>
           <div className="mb-5">
-            Mô Tả: <pre className="text-yellow-700">{detailProduct.description}</pre>
+            Mô Tả: <p className="text-yellow-700">{detailProduct.description}</p>
           </div>
           {/* <div className="mb-5">
             Thương Hiệu: <span className="text-yellow-700">{detailProduct.manufacturer}</span>
