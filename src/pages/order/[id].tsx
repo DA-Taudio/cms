@@ -58,9 +58,9 @@ const DetailOrder = ({ data }: any) => {
   const detailOrder = data?.detailOrder;
 
   useEffect(() => {
-    if (!data || !data?.detailOrder) {
-      router.push('/404');
-    }
+    // if (!data || !data?.detailOrder) {
+    //   router.push('/404');
+    // }
   }, [data, router]);
 
   const [isOpen, setIsOpen] = useState<any>(false);

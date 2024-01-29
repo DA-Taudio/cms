@@ -62,7 +62,7 @@ const Order = () => {
         return (
           <div className="flex items-center">
             <Avatar props={{ image: image }} />
-            <span className="ml-1">{row.userId.fullName}</span>
+            <span className="ml-1">{row?.userId?.fullName}</span>
           </div>
         );
       }

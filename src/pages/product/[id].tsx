@@ -127,7 +127,7 @@ const DetailProduct = ({ data }: any) => {
   const detailProduct = data?.getProduct?.product;
   useEffect(() => {
     if (!data || !data?.detailOrder) {
-      router.push('/404');
+      // router.push('/404');
     }
   }, [data, router]);
 
