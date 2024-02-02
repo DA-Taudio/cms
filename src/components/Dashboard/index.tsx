@@ -156,6 +156,35 @@ const Dashboard: React.FC = () => {
           </LineChart>
         </div>
       </div>
+
+      <div
+        style={{
+          border: 'none',
+          borderRadius: '6px',
+          boxShadow: '0 2px 10px 0 rgba(70, 76, 79, .2)',
+          width: '80vw',
+          height: '100vh',
+          padding: '15px'
+        }}
+      >
+        <iframe src="https://charts.mongodb.com/charts-embed-dom-v2/charts-static.min.js"></iframe>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var script = document.createElement('script');
+                script.src = "https://charts.mongodb.com/charts-embed-dom-v2/charts-static.min.js";
+                script.async = true;
+                document.body.appendChild(script);
+              })();
+            `
+          }}
+        />
+        <iframe
+          src="https://charts.mongodb.com/charts-t-audio-fmpzq/embed/charts?id=65bcc5a3-fde6-4a67-8296-d9bd436ee28f&maxDataAge=3600&theme=light&autoRefresh=true"
+          style={{ width: '100%', height: '80%', border: 'none' }}
+        ></iframe>
+      </div>
     </div>
   );
 };
